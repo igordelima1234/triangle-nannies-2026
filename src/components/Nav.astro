@@ -1,0 +1,281 @@
+---
+import HeaderLink from './HeaderLink.astro';
+import { SITE_TITLE } from '../consts';
+
+interface Props {
+	overlay?: boolean;
+}
+
+const { overlay = false } = Astro.props;
+---
+
+<header class:list={['site-header', { 'site-header--overlay': overlay }]}>
+	<div class="container site-header__inner">
+		<a href="/" class="site-header__logo">{SITE_TITLE}</a>
+
+		<button class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="primary-nav">
+			<span class="sr-only">Open menu</span>
+			<svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true">
+				<path d="M4 8h18M4 13h18M4 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+			</svg>
+		</button>
+
+		<nav class="primary-nav" id="primary-nav">
+			<ul class="primary-nav__list">
+				<li class="has-dropdown">
+					<button class="primary-nav__link dropdown-trigger" aria-expanded="false" aria-controls="services-menu">
+						Services <span aria-hidden="true">▾</span>
+					</button>
+					<ul class="dropdown-menu" id="services-menu">
+						<li><a href="/services/full-time-nanny">Full-Time Nanny</a></li>
+						<li><a href="/services/part-time-nanny">Part-Time Nanny</a></li>
+						<li><a href="/services/newborn-care-specialist">Newborn Care Specialist</a></li>
+						<li><a href="/services/backup-temp-care">Backup &amp; Temp Care</a></li>
+						<li><a href="/services/doulas-newborn-support">Doulas &amp; Newborn Support</a></li>
+					</ul>
+				</li>
+				<li><HeaderLink class="primary-nav__link" href="/families">Families</HeaderLink></li>
+				<li><HeaderLink class="primary-nav__link" href="/candidates">Candidates</HeaderLink></li>
+				<li><HeaderLink class="primary-nav__link" href="/about">About</HeaderLink></li>
+				<li><HeaderLink class="primary-nav__link" href="/blog">Blog</HeaderLink></li>
+				<li><HeaderLink class="primary-nav__link" href="/contact">Contact</HeaderLink></li>
+			</ul>
+			<a href="/get-started" class="btn btn-primary nav-cta">Get Started</a>
+		</nav>
+	</div>
+</header>
+
+<style>
+	.site-header {
+		background: var(--plum);
+		position: sticky;
+		top: 0;
+		z-index: 100;
+		box-shadow: 0 2px 12px rgba(44, 31, 23, 0.15);
+	}
+
+	.site-header__inner {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding-block: 1rem;
+	}
+
+	.site-header__logo {
+		font-family: var(--font-head);
+		font-weight: 700;
+		font-size: 1.15rem;
+		text-transform: uppercase;
+		letter-spacing: 0.02em;
+		color: var(--white);
+		text-decoration: none;
+	}
+
+	.nav-toggle {
+		background: transparent;
+		border: none;
+		color: var(--white);
+		display: flex;
+		padding: 0.4rem;
+		cursor: pointer;
+	}
+
+	.primary-nav {
+		position: fixed;
+		inset: 0 0 0 auto;
+		width: min(320px, 85vw);
+		background: var(--plum);
+		padding: 5.5rem 1.5rem 2rem;
+		transform: translateX(100%);
+		transition: transform 0.25s ease;
+		overflow-y: auto;
+	}
+
+	.primary-nav.is-open {
+		transform: translateX(0);
+	}
+
+	.primary-nav__list {
+		list-style: none;
+		display: flex;
+		flex-direction: column;
+		gap: 0.25rem;
+	}
+
+	.primary-nav__link {
+		display: block;
+		padding: 0.75rem 0;
+		color: var(--white);
+		text-decoration: none;
+		font-weight: 500;
+		background: none;
+		border: none;
+		font-size: 1rem;
+		text-align: left;
+		width: 100%;
+		cursor: pointer;
+	}
+
+	.primary-nav__link:hover,
+	.primary-nav__link.active {
+		color: var(--gold);
+	}
+
+	.dropdown-menu {
+		list-style: none;
+		display: none;
+		flex-direction: column;
+		padding-left: 1rem;
+		border-left: 2px solid rgba(255, 255, 255, 0.2);
+		margin-bottom: 0.5rem;
+	}
+
+	.dropdown-menu.is-open {
+		display: flex;
+	}
+
+	.dropdown-menu a {
+		display: block;
+		padding: 0.5rem 0;
+		color: rgba(255, 255, 255, 0.85);
+		text-decoration: none;
+		font-size: 0.95rem;
+	}
+
+	.dropdown-menu a:hover {
+		color: var(--gold);
+	}
+
+	.nav-cta {
+		margin-top: 1.5rem;
+		width: 100%;
+	}
+
+	@media (min-width: 960px) {
+		.nav-toggle {
+			display: none;
+		}
+
+		.primary-nav {
+			position: static;
+			width: auto;
+			background: none;
+			padding: 0;
+			transform: none;
+			display: flex;
+			align-items: center;
+			gap: 2rem;
+			overflow: visible;
+		}
+
+		.primary-nav__list {
+			flex-direction: row;
+			align-items: center;
+			gap: 0.25rem;
+		}
+
+		.has-dropdown {
+			position: relative;
+		}
+
+		.dropdown-menu {
+			position: absolute;
+			top: 100%;
+			left: 0;
+			background: var(--white);
+			border-radius: var(--radius-md);
+			box-shadow: var(--shadow-soft);
+			padding: 0.5rem;
+			min-width: 220px;
+			border-left: none;
+			margin-top: 0.5rem;
+		}
+
+		.dropdown-menu a {
+			color: var(--text-dark);
+			border-radius: 8px;
+			padding: 0.6rem 0.75rem;
+		}
+
+		.dropdown-menu a:hover {
+			background: var(--cream);
+			color: var(--text-dark);
+		}
+
+		.nav-cta {
+			margin-top: 0;
+			width: auto;
+		}
+	}
+
+	/* Overlay variant: floats transparently over a hero image, pill-shaped nav */
+	.site-header--overlay {
+		position: relative;
+		top: auto;
+		z-index: 10;
+		background: transparent;
+		box-shadow: none;
+		padding-block: 1.5rem;
+	}
+
+	.site-header--overlay .site-header__logo {
+		text-shadow: 0 1px 14px rgba(44, 31, 23, 0.35);
+	}
+
+	.site-header--overlay .nav-toggle {
+		text-shadow: 0 1px 14px rgba(44, 31, 23, 0.35);
+	}
+
+	@media (min-width: 960px) {
+		.site-header--overlay .primary-nav__list {
+			background: rgba(255, 255, 255, 0.16);
+			backdrop-filter: blur(10px);
+			-webkit-backdrop-filter: blur(10px);
+			border: 1px solid rgba(255, 255, 255, 0.4);
+			border-radius: 999px;
+			padding: 0.35rem 0.4rem;
+			gap: 0;
+		}
+
+		.site-header--overlay .primary-nav__link {
+			padding: 0.6rem 1.1rem;
+			border-radius: 999px;
+		}
+
+		.site-header--overlay .primary-nav__link:hover,
+		.site-header--overlay .primary-nav__link.active {
+			background: rgba(255, 255, 255, 0.22);
+			color: var(--white);
+		}
+
+		.site-header--overlay .dropdown-menu {
+			margin-top: 0.75rem;
+		}
+	}
+</style>
+
+<script>
+	const toggle = document.getElementById('nav-toggle');
+	const nav = document.getElementById('primary-nav');
+
+	toggle?.addEventListener('click', () => {
+		const isOpen = nav?.classList.toggle('is-open');
+		toggle.setAttribute('aria-expanded', String(Boolean(isOpen)));
+	});
+
+	const dropdownTrigger = document.querySelector('.dropdown-trigger');
+	const dropdownMenu = document.getElementById('services-menu');
+
+	dropdownTrigger?.addEventListener('click', () => {
+		const isOpen = dropdownMenu?.classList.toggle('is-open');
+		dropdownTrigger.setAttribute('aria-expanded', String(Boolean(isOpen)));
+	});
+
+	document.addEventListener('click', (event) => {
+		const target = event.target as Node;
+		if (!dropdownTrigger?.contains(target) && !dropdownMenu?.contains(target)) {
+			dropdownMenu?.classList.remove('is-open');
+			dropdownTrigger?.setAttribute('aria-expanded', 'false');
+		}
+	});
+</script>
