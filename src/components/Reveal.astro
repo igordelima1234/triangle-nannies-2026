@@ -1,0 +1,70 @@
+---
+// Emits the scroll-reveal styles and observer once per page.
+// Usage: add class="reveal" to any element (and optionally
+// style="--reveal-delay:160ms" to stagger it), then render
+// <Reveal /> once near the end of <body>.
+---
+
+<style is:global>
+	.reveal {
+		opacity: 0;
+		transform: translateY(28px);
+		transition:
+			opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+			transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+		transition-delay: var(--reveal-delay, 0ms);
+		will-change: opacity, transform;
+	}
+
+	.reveal.is-visible {
+		opacity: 1;
+		transform: none;
+	}
+
+	/* Content must never stay hidden when motion is reduced */
+	@media (prefers-reduced-motion: reduce) {
+		.reveal,
+		.reveal.is-visible {
+			opacity: 1;
+			transform: none;
+			transition: none;
+		}
+	}
+</style>
+
+<noscript>
+	<style>
+		/* Without JS the observer never runs, so content must not stay hidden */
+		.reveal {
+			opacity: 1 !important;
+			transform: none !important;
+		}
+	</style>
+</noscript>
+
+<script is:inline>
+	(() => {
+		const nodes = document.querySelectorAll('.reveal');
+		const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+		// No observer support, or motion is reduced: show everything immediately
+		if (reduced || !('IntersectionObserver' in window)) {
+			nodes.forEach((n) => n.classList.add('is-visible'));
+			return;
+		}
+
+		const observer = new IntersectionObserver(
+			(entries) => {
+				entries.forEach((entry) => {
+					if (entry.isIntersecting) {
+						entry.target.classList.add('is-visible');
+						observer.unobserve(entry.target);
+					}
+				});
+			},
+			{ rootMargin: '0px 0px -8% 0px', threshold: 0.08 }
+		);
+
+		nodes.forEach((n) => observer.observe(n));
+	})();
+</script>

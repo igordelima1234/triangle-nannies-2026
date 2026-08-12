@@ -1,17 +1,134 @@
 ---
 interface Props {
+	/** What photo belongs here, shown as a caption chip for the designer */
 	label: string;
-	ratio?: '4-3' | '1-1' | '3-4' | '16-9';
+	ratio?: '4-3' | '1-1' | '3-4' | '16-9' | '3-2';
+	/** 1-6, varies the color treatment so a grid does not look repetitive */
+	variant?: number;
 	class?: string;
 }
 
-const { label, ratio = '4-3', class: className = '' } = Astro.props;
+const { label, ratio = '4-3', variant = 1, class: className = '' } = Astro.props;
+
+const v = ((variant - 1) % 6) + 1;
 ---
 
-<div
-	class:list={['img-placeholder', `aspect-${ratio}`, className]}
-	role="img"
-	aria-label={label}
->
-	<span class="img-placeholder__label" aria-hidden="true">{label}</span>
-</div>
+<figure class:list={['ph', `ph--v${v}`, `aspect-${ratio}`, className]}>
+	<svg class="ph__art" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+		<defs>
+			<linearGradient id={`phg-${v}`} x1="0" y1="0" x2="1" y2="1">
+				<stop offset="0%" class="ph__stop-a" />
+				<stop offset="100%" class="ph__stop-b" />
+			</linearGradient>
+			<filter id="phblur"><feGaussianBlur stdDeviation="26" /></filter>
+		</defs>
+		<rect width="400" height="300" fill={`url(#phg-${v})`} />
+		<g filter="url(#phblur)" opacity="0.55">
+			<circle cx="95" cy="205" r="72" class="ph__blob-a" />
+			<circle cx="290" cy="95" r="88" class="ph__blob-b" />
+			<circle cx="215" cy="240" r="54" class="ph__blob-c" />
+		</g>
+	</svg>
+
+	<span class="ph__glyph" aria-hidden="true">
+		<svg viewBox="0 0 24 24" fill="none" width="26" height="26">
+			<path
+				d="M3 8.5A2.5 2.5 0 015.5 6h1.7a1.5 1.5 0 001.2-.6l.9-1.2A1.5 1.5 0 0110.5 3.6h3a1.5 1.5 0 011.2.6l.9 1.2a1.5 1.5 0 001.2.6h1.7A2.5 2.5 0 0121 8.5v8A2.5 2.5 0 0118.5 19h-13A2.5 2.5 0 013 16.5v-8z"
+				stroke="currentColor"
+				stroke-width="1.5"
+			></path>
+			<circle cx="12" cy="12.5" r="3.4" stroke="currentColor" stroke-width="1.5"></circle>
+		</svg>
+	</span>
+
+	<figcaption class="ph__caption">{label}</figcaption>
+</figure>
+
+<style>
+	.ph {
+		position: relative;
+		display: flex;
+		align-items: flex-end;
+		margin: 0;
+		width: 100%;
+		border-radius: var(--radius-lg);
+		overflow: hidden;
+		isolation: isolate;
+		background: var(--sage);
+	}
+
+	.ph__art {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		z-index: 0;
+	}
+
+	/* Warm, on-brand color pairings so a grid of these does not read repetitive */
+	.ph--v1 .ph__stop-a { stop-color: #e8d9c4; }
+	.ph--v1 .ph__stop-b { stop-color: #c6d0bf; }
+	.ph--v1 .ph__blob-a { fill: #ffb569; }
+	.ph--v1 .ph__blob-b { fill: #ffecd1; }
+	.ph--v1 .ph__blob-c { fill: #a97875; }
+
+	.ph--v2 .ph__stop-a { stop-color: #f0ded0; }
+	.ph--v2 .ph__stop-b { stop-color: #a97875; }
+	.ph--v2 .ph__blob-a { fill: #ffecd1; }
+	.ph--v2 .ph__blob-b { fill: #ffb569; }
+	.ph--v2 .ph__blob-c { fill: #68536b; }
+
+	.ph--v3 .ph__stop-a { stop-color: #d6ddcd; }
+	.ph--v3 .ph__stop-b { stop-color: #68536b; }
+	.ph--v3 .ph__blob-a { fill: #c6d0bf; }
+	.ph--v3 .ph__blob-b { fill: #ffecd1; }
+	.ph--v3 .ph__blob-c { fill: #ffb569; }
+
+	.ph--v4 .ph__stop-a { stop-color: #ffecd1; }
+	.ph--v4 .ph__stop-b { stop-color: #ffb569; }
+	.ph--v4 .ph__blob-a { fill: #a97875; }
+	.ph--v4 .ph__blob-b { fill: #ffffff; }
+	.ph--v4 .ph__blob-c { fill: #c6d0bf; }
+
+	.ph--v5 .ph__stop-a { stop-color: #cbd4c2; }
+	.ph--v5 .ph__stop-b { stop-color: #e6d2bd; }
+	.ph--v5 .ph__blob-a { fill: #68536b; }
+	.ph--v5 .ph__blob-b { fill: #ffb569; }
+	.ph--v5 .ph__blob-c { fill: #ffffff; }
+
+	.ph--v6 .ph__stop-a { stop-color: #b9a3ba; }
+	.ph--v6 .ph__stop-b { stop-color: #ffecd1; }
+	.ph--v6 .ph__blob-a { fill: #ffb569; }
+	.ph--v6 .ph__blob-b { fill: #c6d0bf; }
+	.ph--v6 .ph__blob-c { fill: #68536b; }
+
+	.ph__glyph {
+		position: absolute;
+		top: 1rem;
+		left: 1rem;
+		z-index: 2;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 2.6rem;
+		height: 2.6rem;
+		border-radius: 999px;
+		background: rgba(255, 255, 255, 0.75);
+		color: var(--plum);
+	}
+
+	.ph__caption {
+		position: relative;
+		z-index: 2;
+		margin: 0.9rem;
+		padding: 0.55em 0.9em;
+		border-radius: 12px;
+		background: rgba(44, 31, 23, 0.72);
+		color: rgba(255, 255, 255, 0.95);
+		font-size: 0.72rem;
+		line-height: 1.45;
+		font-weight: 500;
+		backdrop-filter: blur(6px);
+		-webkit-backdrop-filter: blur(6px);
+	}
+</style>
