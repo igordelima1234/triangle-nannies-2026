@@ -2,7 +2,79 @@
 import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import ImagePlaceholder from '../components/ImagePlaceholder.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+
+const trustStrip = [
+	{
+		text: '15+ years placing nannies in the Triangle',
+		icon: 'M12 2l2.4 6.6L21 10l-5.4 4.2L17 21l-5-3.6L7 21l1.4-6.8L3 10l6.6-1.4z',
+	},
+	{
+		text: 'Every candidate interviewed in person',
+		icon: 'M12 2a5 5 0 100 10 5 5 0 000-10zM4 21a8 8 0 0116 0',
+	},
+	{
+		text: 'References verified by phone, not just email',
+		icon: 'M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.13.96.36 1.9.68 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.32 1.85.55 2.81.68A2 2 0 0122 16.92z',
+	},
+	{
+		text: 'Background checks before any introduction is made',
+		icon: 'M12 2l8 4v6c0 5-3.4 8.4-8 10-4.6-1.6-8-5-8-10V6z',
+	},
+];
+
+const soundFamiliar = [
+	'Working through a schedule that no daycare can match',
+	'Adjusting to a new baby and running out of hands',
+	'Coping with a nanny who just gave notice',
+	'Needing backup care for the days regular care falls through',
+	'Managing two working parents and zero flexibility',
+	'Wanting someone who feels like part of the family, not a stranger in the house',
+];
+
+const services = [
+	{
+		name: 'Full-Time Nanny',
+		description:
+			"A dedicated caregiver for your family's daily rhythm, from North Hills to Cary.",
+		href: '/services/full-time-nanny',
+		hold: false,
+	},
+	{
+		name: 'Part-Time Nanny',
+		description:
+			'Flexible coverage that bends around school pickup, work travel, and everything in between.',
+		href: '/services/part-time-nanny',
+		hold: false,
+	},
+	{
+		name: 'Newborn Care Specialist',
+		description:
+			'Overnight and early-weeks support from someone who has done this hundreds of times.',
+		href: '/services/newborn-care-specialist',
+		hold: false,
+	},
+	{
+		name: 'Backup & Temp Care',
+		description: 'When your regular care falls through, we have someone ready.',
+		href: '/services/backup-temp-care',
+		hold: false,
+	},
+	{
+		name: 'Household Manager',
+		// HOLD: do not publish until the Household Manager service page is live, per Austin
+		description: '',
+		href: '/services/household-manager',
+		hold: true,
+	},
+	{
+		name: 'Doulas & Newborn Support',
+		description: 'Support for the fourth trimester, on your schedule.',
+		href: '/services/doulas-newborn-support',
+		hold: false,
+	},
+].filter((service) => !service.hold);
 ---
 
 <!doctype html>
@@ -12,39 +84,475 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 	</head>
 	<body>
 		<Header />
-		<main>
-			<h1>🧑‍🚀 Hello, Astronaut!</h1>
-			<p>
-				Welcome to the official <a href="https://astro.build/">Astro</a> blog starter template. This
-				template serves as a lightweight, minimally-styled starting point for anyone looking to build
-				a personal website, blog, or portfolio with Astro.
-			</p>
-			<p>
-				This template comes with a few integrations already configured in your
-				<code>astro.config.mjs</code> file. You can customize your setup with
-				<a href="https://astro.build/integrations">Astro Integrations</a> to add tools like Tailwind,
-				React, or Vue to your project.
-			</p>
-			<p>Here are a few ideas on how to get started with the template:</p>
-			<ul>
-				<li>Edit this page in <code>src/pages/index.astro</code></li>
-				<li>Edit the site header items in <code>src/components/Header.astro</code></li>
-				<li>Add your name to the footer in <code>src/components/Footer.astro</code></li>
-				<li>Check out the included blog posts in <code>src/content/blog/</code></li>
-				<li>Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code></li>
-			</ul>
-			<p>
-				Have fun! If you get stuck, remember to <a href="https://docs.astro.build/"
-					>read the docs
-				</a> or <a href="https://astro.build/chat">join us on Discord</a> to ask questions.
-			</p>
-			<p>
-				Looking for a blog template with a bit more personality? Check out <a
-					href="https://github.com/Charca/astro-blog-template"
-					>astro-blog-template
-				</a> by <a href="https://twitter.com/Charca">Maxi Ferreira</a>.
-			</p>
+
+		<main id="main">
+			<!-- Hero -->
+			<section class="hero">
+				<div class="container hero__inner">
+					<div class="hero__copy">
+						<span class="eyebrow">Triangle Nannies &amp; Household Staffing</span>
+						<h1>More time for what matters.</h1>
+						<p class="lede">
+							We've been matching Triangle families with nannies they actually trust for more
+							than 15 years. Raleigh, Durham, Chapel Hill, Cary, and everywhere in between.
+						</p>
+						<div class="hero__actions">
+							<a class="btn btn-primary" href="/get-started">Start Your Search</a>
+							<a class="link-arrow" href="/candidates">Looking for nanny work? →</a>
+						</div>
+					</div>
+					<ImagePlaceholder
+						class="hero__image"
+						ratio="4-3"
+						label="Photo: a nanny and child laughing together in a Triangle-area home, 1200x900"
+					/>
+				</div>
+			</section>
+
+			<!-- Trust strip -->
+			<section class="trust-strip" aria-label="Why families trust Triangle Nannies">
+				<div class="container trust-strip__inner">
+					{
+						trustStrip.map((item) => (
+							<div class="trust-strip__item">
+								<svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+									<path
+										d={item.icon}
+										stroke="currentColor"
+										stroke-width="1.8"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+									/>
+								</svg>
+								<span>{item.text}</span>
+							</div>
+						))
+					}
+				</div>
+			</section>
+
+			<!-- Sound Familiar -->
+			<section class="section section--cream">
+				<div class="container grid grid-2">
+					<ImagePlaceholder
+						ratio="3-4"
+						label="Photo: a parent on the phone at the kitchen table while a toddler tugs at their sleeve, 900x1200"
+					/>
+					<div>
+						<span class="eyebrow">For Families</span>
+						<h2>Most families come to us after something stopped working.</h2>
+						<p class="lede">
+							The daycare waitlist that never cleared. The schedule that became impossible the
+							second school let out early. The care that fell through with two days' notice. We
+							know how to help from that exact moment.
+						</p>
+						<ul class="checklist">
+							{
+								soundFamiliar.map((item) => (
+									<li>
+										<svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+											<path
+												d="M5 13l4 4L19 7"
+												stroke="currentColor"
+												stroke-width="2.2"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											/>
+										</svg>
+										<span>{item}</span>
+									</li>
+								))
+							}
+						</ul>
+						<a class="btn btn-primary" href="/families">See How We Match Families</a>
+					</div>
+				</div>
+			</section>
+
+			<!-- Service cards -->
+			<section class="section">
+				<div class="container">
+					<div class="section-head section-head--center">
+						<span class="eyebrow">What We Place</span>
+						<h2>Whatever your household needs, we've placed it.</h2>
+					</div>
+					<div class="service-grid">
+						{
+							services.map((service) => (
+								<article class="card service-card">
+									<ImagePlaceholder
+										ratio="4-3"
+										label={`Photo representing ${service.name}, 600x450`}
+									/>
+									<h3>{service.name}</h3>
+									<p>{service.description}</p>
+									<a class="link-arrow" href={service.href}>
+										Learn More →
+									</a>
+								</article>
+							))
+						}
+					</div>
+				</div>
+			</section>
+
+			<!-- How Placement Works -->
+			<section class="section section--sage">
+				<div class="container grid grid-2 visually-reverse">
+					<div>
+						<span class="eyebrow">The Process</span>
+						<h2>Finding the right nanny takes more than a resume review.</h2>
+						<p class="lede">
+							We interview every candidate in person, verify references by phone, and run a
+							comprehensive background check before any introduction is made. Then we match on
+							the details that actually matter: your schedule, your household, your kids'
+							personalities, even the family with three kittens if that's a dealbreaker.
+						</p>
+						<a class="btn btn-primary" href="/how-it-works">See the Full Process</a>
+					</div>
+					<ImagePlaceholder
+						ratio="4-3"
+						label="Photo: Triangle Nannies team reviewing candidate references in the office, 1200x900"
+					/>
+				</div>
+			</section>
+
+			<!-- Split CTA banner -->
+			<section class="split-cta">
+				<div class="split-cta__panel split-cta__panel--families">
+					<div class="split-cta__content">
+						<h2>Ready to find your match?</h2>
+						<p>Tell us what your family needs and we'll take it from there.</p>
+						<a class="btn btn-primary" href="/get-started">Start Your Search</a>
+					</div>
+				</div>
+				<div class="split-cta__panel split-cta__panel--candidates">
+					<div class="split-cta__content">
+						<h2>Your next great family is waiting.</h2>
+						<p>And we do the work to make sure they're ready for you, too.</p>
+						<a class="btn btn-primary" href="/apply">Apply to Join Our Network</a>
+					</div>
+				</div>
+			</section>
+
+			<!-- Meet Austin -->
+			<section class="section section--plum">
+				<div class="container grid grid-2">
+					<ImagePlaceholder
+						ratio="1-1"
+						label="Photo: Austin Macfarlane, founder of Triangle Nannies, 900x900"
+					/>
+					<div>
+						<span class="eyebrow">Meet the Founder</span>
+						<blockquote class="pull-quote">
+							"I can always tell when a parent is white-knuckling through the call. They ask
+							logistics questions right away because logistics feel safer than the thing they
+							actually want to say: I don't know how to trust a stranger with my child."
+						</blockquote>
+						<p>
+							Austin Macfarlane started Triangle Nannies after spending years trying to find
+							reliable childcare for her own family. That experience is in the DNA of every
+							placement we make.
+						</p>
+						<a class="btn btn-outline" href="/about">Read Austin's Story</a>
+					</div>
+				</div>
+			</section>
+
+			<!-- Trusted By / Community -->
+			<section class="section">
+				<div class="container">
+					<div class="section-head section-head--center">
+						<span class="eyebrow">In the Community</span>
+						<h2>Proud to be part of the Triangle.</h2>
+					</div>
+					<div class="logo-row" aria-label="Community partners, coming soon">
+						{
+							Array.from({ length: 5 }).map((_, i) => (
+								<div class="logo-frame" aria-hidden="true">
+									<span>Partner logo</span>
+								</div>
+							))
+						}
+					</div>
+				</div>
+			</section>
+
+			<!-- Testimonials -->
+			<section class="section section--cream">
+				<div class="container">
+					<div class="section-head section-head--center">
+						<span class="eyebrow">What Families Say</span>
+					</div>
+					<div class="testimonial-row">
+						<figure class="card testimonial-card">
+							<span class="testimonial-card__tag">Sample review, replace with real content</span>
+							<blockquote>
+								"This is placeholder testimonial copy standing in for a real Google Business
+								Profile review. Swap this card for live review content before launch."
+							</blockquote>
+							<figcaption>Placeholder Reviewer, Cary, NC</figcaption>
+						</figure>
+					</div>
+				</div>
+			</section>
+
+			<!-- Final CTA band -->
+			<section class="section section--plum final-cta">
+				<div class="container final-cta__inner">
+					<h2>Let's find the right person for your family.</h2>
+					<p class="lede">Fifteen years in the Triangle. One conversation to start.</p>
+					<a class="btn btn-primary" href="/get-started">Get Started</a>
+				</div>
+			</section>
 		</main>
+
 		<Footer />
+
+		<style>
+			.hero {
+				background: var(--cream);
+				padding-block: 3rem;
+			}
+
+			@media (min-width: 768px) {
+				.hero {
+					padding-block: 5rem;
+				}
+			}
+
+			.hero__inner {
+				display: grid;
+				gap: 2.5rem;
+				align-items: center;
+			}
+
+			.hero__actions {
+				display: flex;
+				align-items: center;
+				gap: 1.5rem;
+				flex-wrap: wrap;
+				margin-top: 1.5rem;
+			}
+
+			@media (min-width: 900px) {
+				.hero__inner {
+					grid-template-columns: 1fr 1fr;
+				}
+			}
+
+			.trust-strip {
+				background: var(--white);
+				border-block: 1px solid var(--sage);
+				padding-block: 1.75rem;
+			}
+
+			.trust-strip__inner {
+				display: grid;
+				gap: 1.25rem;
+				grid-template-columns: 1fr;
+			}
+
+			@media (min-width: 700px) {
+				.trust-strip__inner {
+					grid-template-columns: repeat(2, 1fr);
+				}
+			}
+
+			@media (min-width: 1100px) {
+				.trust-strip__inner {
+					grid-template-columns: repeat(4, 1fr);
+				}
+			}
+
+			.trust-strip__item {
+				display: flex;
+				align-items: flex-start;
+				gap: 0.75rem;
+				font-size: 0.92rem;
+				font-weight: 500;
+				color: var(--text-dark);
+			}
+
+			.trust-strip__item svg {
+				flex-shrink: 0;
+				color: var(--terracotta-dark);
+				margin-top: 0.15rem;
+			}
+
+			.checklist {
+				list-style: none;
+				display: flex;
+				flex-direction: column;
+				gap: 0.75rem;
+				margin: 1.5rem 0 2rem;
+			}
+
+			.checklist li {
+				display: flex;
+				align-items: flex-start;
+				gap: 0.75rem;
+			}
+
+			.checklist svg {
+				flex-shrink: 0;
+				color: var(--terracotta-dark);
+				margin-top: 0.2rem;
+			}
+
+			.service-grid {
+				display: grid;
+				gap: 1.75rem;
+				grid-template-columns: 1fr;
+			}
+
+			@media (min-width: 640px) {
+				.service-grid {
+					grid-template-columns: repeat(2, 1fr);
+				}
+			}
+
+			@media (min-width: 1024px) {
+				.service-grid {
+					grid-template-columns: repeat(3, 1fr);
+				}
+			}
+
+			.service-card {
+				display: flex;
+				flex-direction: column;
+				gap: 0.75rem;
+			}
+
+			.service-card h3 {
+				margin-bottom: 0;
+			}
+
+			.service-card p {
+				color: var(--text-muted);
+				flex-grow: 1;
+			}
+
+			.split-cta {
+				display: grid;
+				grid-template-columns: 1fr;
+			}
+
+			@media (min-width: 800px) {
+				.split-cta {
+					grid-template-columns: 1fr 1fr;
+				}
+			}
+
+			.split-cta__panel {
+				padding: 4rem 1.25rem;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
+
+			.split-cta__panel--families {
+				background: var(--terracotta);
+				color: var(--white);
+			}
+
+			.split-cta__panel--candidates {
+				background: var(--sage);
+				color: var(--text-dark);
+			}
+
+			.split-cta__content {
+				max-width: 26rem;
+				text-align: center;
+			}
+
+			.split-cta__panel--families h2 {
+				color: var(--white);
+			}
+
+			.split-cta__content p {
+				margin-bottom: 1.5rem;
+			}
+
+			.pull-quote {
+				font-family: var(--font-head);
+				font-size: 1.4rem;
+				font-weight: 500;
+				line-height: 1.45;
+				margin: 0 0 1.5rem;
+				padding: 0;
+				border: none;
+				color: var(--white);
+			}
+
+			.logo-row {
+				display: grid;
+				gap: 1.25rem;
+				grid-template-columns: repeat(2, 1fr);
+			}
+
+			@media (min-width: 700px) {
+				.logo-row {
+					grid-template-columns: repeat(5, 1fr);
+				}
+			}
+
+			.logo-frame {
+				aspect-ratio: 3 / 2;
+				border: 1.5px dashed var(--sage);
+				border-radius: var(--radius-md);
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				color: var(--text-muted);
+				font-size: 0.8rem;
+			}
+
+			.testimonial-row {
+				display: flex;
+				justify-content: center;
+			}
+
+			.testimonial-card {
+				max-width: 32rem;
+				text-align: center;
+				position: relative;
+			}
+
+			.testimonial-card__tag {
+				display: inline-block;
+				background: var(--gold);
+				color: var(--text-dark);
+				font-size: 0.72rem;
+				font-weight: 700;
+				text-transform: uppercase;
+				letter-spacing: 0.06em;
+				padding: 0.3em 0.8em;
+				border-radius: 999px;
+				margin-bottom: 1.25rem;
+			}
+
+			.testimonial-card blockquote {
+				margin: 0 0 1.25rem;
+				font-size: 1.1rem;
+				line-height: 1.6;
+				color: var(--text-dark);
+			}
+
+			.testimonial-card figcaption {
+				color: var(--text-muted);
+				font-size: 0.9rem;
+			}
+
+			.final-cta__inner {
+				text-align: center;
+				max-width: 40rem;
+				margin-inline: auto;
+			}
+
+			.final-cta__inner p {
+				margin-bottom: 2rem;
+			}
+		</style>
 	</body>
 </html>
