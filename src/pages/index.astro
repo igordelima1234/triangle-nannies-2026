@@ -1,6 +1,7 @@
 ---
 import BaseHead from '../components/BaseHead.astro';
-import Header from '../components/Header.astro';
+import UtilityBar from '../components/UtilityBar.astro';
+import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import ImagePlaceholder from '../components/ImagePlaceholder.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
@@ -83,32 +84,32 @@ const services = [
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
 	</head>
 	<body>
-		<Header />
+		<UtilityBar />
 
-		<main id="main">
-			<!-- Hero -->
-			<section class="hero">
-				<div class="container hero__inner">
-					<div class="hero__copy">
-						<span class="eyebrow">Triangle Nannies &amp; Household Staffing</span>
-						<h1>More time for what matters.</h1>
-						<p class="lede">
-							We've been matching Triangle families with nannies they actually trust for more
-							than 15 years. Raleigh, Durham, Chapel Hill, Cary, and everywhere in between.
-						</p>
-						<div class="hero__actions">
-							<a class="btn btn-primary" href="/get-started">Start Your Search</a>
-							<a class="link-arrow" href="/candidates">Looking for nanny work? →</a>
-						</div>
+		<!-- Nav + hero share a grid stack so the pill nav floats over the photo -->
+		<div class="hero-stack">
+			<Nav overlay />
+			<section class="hero" aria-label="Introduction">
+				<div class="hero__media" role="img" aria-label="Photo: a nanny and child laughing together at the family table in a Triangle-area home, 1920x1080">
+					<span class="hero__media-label" aria-hidden="true">Photo: warm family kitchen scene, Triangle NC, 1920x1080</span>
+				</div>
+				<div class="hero__scrim" aria-hidden="true"></div>
+				<div class="container hero__content">
+					<span class="eyebrow">Triangle Nannies &amp; Household Staffing</span>
+					<h1>More time for what matters.</h1>
+					<p class="lede hero__lede">
+						We've been matching Triangle families with nannies they actually trust for more
+						than 15 years. Raleigh, Durham, Chapel Hill, Cary, and everywhere in between.
+					</p>
+					<div class="hero__actions">
+						<a class="btn btn-primary" href="/get-started">Start Your Search</a>
 					</div>
-					<ImagePlaceholder
-						class="hero__image"
-						ratio="4-3"
-						label="Photo: a nanny and child laughing together in a Triangle-area home, 1200x900"
-					/>
+					<a class="link-arrow hero__secondary" href="/candidates">Looking for nanny work? →</a>
 				</div>
 			</section>
+		</div>
 
+		<main id="main">
 			<!-- Trust strip -->
 			<section class="trust-strip" aria-label="Why families trust Triangle Nannies">
 				<div class="container trust-strip__inner">
@@ -310,21 +311,94 @@ const services = [
 		<Footer />
 
 		<style>
-			.hero {
+			/* Hero: nav and photo share one grid cell so the pill nav floats over the image */
+			.hero-stack {
+				display: grid;
 				background: var(--cream);
-				padding-block: 3rem;
+				padding: 0.75rem;
 			}
 
-			@media (min-width: 768px) {
-				.hero {
-					padding-block: 5rem;
+			@media (min-width: 700px) {
+				.hero-stack {
+					padding: 1.25rem;
 				}
 			}
 
-			.hero__inner {
-				display: grid;
-				gap: 2.5rem;
-				align-items: center;
+			.hero-stack > :global(*) {
+				grid-area: 1 / 1;
+			}
+
+			.hero-stack > :global(.site-header--overlay) {
+				z-index: 10;
+				padding-inline: 0.75rem;
+			}
+
+			.hero {
+				position: relative;
+				min-height: 34rem;
+				display: flex;
+				align-items: flex-end;
+				border-radius: var(--radius-lg);
+				overflow: hidden;
+				isolation: isolate;
+			}
+
+			@media (min-width: 700px) {
+				.hero {
+					min-height: 42rem;
+				}
+			}
+
+			.hero__media {
+				position: absolute;
+				inset: 0;
+				z-index: 0;
+				background: linear-gradient(135deg, var(--terracotta), var(--plum) 65%);
+				display: flex;
+				align-items: flex-start;
+				justify-content: flex-end;
+				padding: 1.5rem;
+			}
+
+			.hero__media-label {
+				font-size: 0.7rem;
+				font-weight: 500;
+				color: rgba(255, 255, 255, 0.5);
+				max-width: 16ch;
+				text-align: right;
+			}
+
+			.hero__scrim {
+				position: absolute;
+				inset: 0;
+				z-index: 1;
+				background: linear-gradient(
+					0deg,
+					rgba(20, 12, 8, 0.72) 0%,
+					rgba(20, 12, 8, 0.25) 45%,
+					rgba(20, 12, 8, 0) 70%
+				);
+			}
+
+			.hero__content {
+				position: relative;
+				z-index: 2;
+				padding-block: 3rem 2.5rem;
+				max-width: 44rem;
+				color: var(--white);
+			}
+
+			.hero__content .eyebrow {
+				color: var(--gold);
+			}
+
+			.hero__content h1 {
+				color: var(--white);
+			}
+
+			.hero__lede {
+				color: rgba(255, 255, 255, 0.9);
+				max-width: 40ch;
 			}
 
 			.hero__actions {
@@ -332,12 +406,22 @@ const services = [
 				align-items: center;
 				gap: 1.5rem;
 				flex-wrap: wrap;
-				margin-top: 1.5rem;
+				margin-top: 1.75rem;
 			}
 
-			@media (min-width: 900px) {
-				.hero__inner {
-					grid-template-columns: 1fr 1fr;
+			.hero__secondary {
+				display: inline-flex;
+				margin-top: 1rem;
+				color: var(--white);
+			}
+
+			.hero__secondary:hover {
+				color: var(--gold);
+			}
+
+			@media (min-width: 700px) {
+				.hero__content {
+					padding-block: 4.5rem 3.5rem;
 				}
 			}
 
