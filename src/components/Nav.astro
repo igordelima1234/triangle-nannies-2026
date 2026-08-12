@@ -226,26 +226,40 @@ const { overlay = false } = Astro.props;
 		text-shadow: 0 1px 14px rgba(44, 31, 23, 0.35);
 	}
 
+	.site-header--overlay .container {
+		max-width: 1440px;
+	}
+
 	@media (min-width: 960px) {
+		.site-header--overlay .primary-nav {
+			gap: 2.5rem;
+		}
+
 		.site-header--overlay .primary-nav__list {
 			background: rgba(255, 255, 255, 0.16);
 			backdrop-filter: blur(10px);
 			-webkit-backdrop-filter: blur(10px);
 			border: 1px solid rgba(255, 255, 255, 0.4);
 			border-radius: 999px;
-			padding: 0.35rem 0.4rem;
-			gap: 0;
+			padding: 0.5rem 0.6rem;
+			gap: 0.15rem;
 		}
 
 		.site-header--overlay .primary-nav__link {
-			padding: 0.6rem 1.1rem;
+			padding: 0.85rem 1.6rem;
+			font-size: 1.02rem;
 			border-radius: 999px;
+			white-space: nowrap;
 		}
 
 		.site-header--overlay .primary-nav__link:hover,
 		.site-header--overlay .primary-nav__link.active {
 			background: rgba(255, 255, 255, 0.22);
 			color: var(--white);
+		}
+
+		.site-header--overlay .nav-cta {
+			padding-inline: 2.1rem;
 		}
 
 		.site-header--overlay .dropdown-menu {
