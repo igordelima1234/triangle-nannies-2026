@@ -1,10 +1,12 @@
 ---
+import { SITE_TITLE } from '../consts';
+
 const year = new Date().getFullYear();
 ---
 
 <footer class="site-footer">
 	<div class="footer-inner footer-wordmark-row">
-		<p class="footer-wordmark">Triangle Nannies</p>
+		<img class="footer-wordmark" src="/images/logos/tn-logo-full-light.svg" alt={SITE_TITLE} width="874" height="200" />
 	</div>
 
 	<hr class="footer-divider" />
@@ -70,10 +72,6 @@ const year = new Date().getFullYear();
 		</nav>
 	</div>
 
-	<div class="footer-inner footer-mark-row">
-		<div class="footer-badge" aria-hidden="true">TN</div>
-	</div>
-
 	<div class="footer-inner footer-bottom">
 		<p>
 			&copy; {year} Triangle Nannies &amp; Household Staffing. Serving Raleigh, Durham, Chapel Hill,
@@ -111,14 +109,9 @@ const year = new Date().getFullYear();
 	}
 
 	.footer-wordmark {
-		font-family: var(--font-head);
-		font-weight: 700;
-		font-size: clamp(2.25rem, 7vw, 4.75rem);
-		line-height: 1;
-		text-transform: uppercase;
-		letter-spacing: 0.01em;
-		color: var(--white);
-		margin: 0;
+		display: block;
+		height: auto;
+		width: clamp(14rem, 34vw, 24rem);
 	}
 
 	.footer-divider {
@@ -241,27 +234,6 @@ const year = new Date().getFullYear();
 
 	.footer-col a:hover {
 		color: var(--gold);
-	}
-
-	.footer-mark-row {
-		display: flex;
-		justify-content: center;
-		padding-block: 1rem 3rem;
-	}
-
-	.footer-badge {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		width: 5.5rem;
-		height: 5.5rem;
-		border-radius: 999px;
-		border: 1.5px solid rgba(255, 255, 255, 0.4);
-		font-family: var(--font-head);
-		font-weight: 700;
-		font-size: 1.35rem;
-		letter-spacing: 0.02em;
-		color: var(--white);
 	}
 
 	.footer-bottom {
