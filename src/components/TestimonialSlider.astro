@@ -1,0 +1,276 @@
+---
+// DEV NOTE: dummy testimonials for layout purposes only, per Austin's request.
+// Swap for real reviews (Google Business Profile / Constant Contact) before launch.
+const testimonials = [
+	{
+		quote:
+			"The calm, thoughtful rhythm of the day makes such a difference. My son comes home smiling, and so do we.",
+		name: 'Sarah K.',
+		role: 'Parent of Mateo, Cary',
+		initials: 'SK',
+	},
+	{
+		quote:
+			"We interviewed three agencies. Triangle Nannies was the only one that asked about our family instead of just filling a shift.",
+		name: 'James & Priya T.',
+		role: 'Parents of Ava, Raleigh',
+		initials: 'JP',
+	},
+	{
+		quote:
+			"Our nanny caught things about Leo's routine that even we hadn't noticed yet. That kind of attention is rare.",
+		name: 'Monica D.',
+		role: 'Parent of Leo, Durham',
+		initials: 'MD',
+	},
+	{
+		quote: 'From the first call to the first week, everything felt handled. We finally exhaled.',
+		name: 'The Alvarez Family',
+		role: 'Chapel Hill',
+		initials: 'AF',
+	},
+	{
+		quote:
+			'Background checks, references, real interviews. We slept better knowing the work was actually done.',
+		name: 'Grace P.',
+		role: 'Parent of Nora, Cary',
+		initials: 'GP',
+	},
+];
+
+const avatarVariants = ['plum', 'terracotta', 'gold', 'sage'];
+---
+
+<section class="t-slider" aria-label="What families say">
+	<div class="t-slider__wrap">
+		<div class="t-slider__track" id="t-track">
+			{
+				testimonials.map((t, i) => (
+					<article class="t-card" data-index={i}>
+						<div class="t-card__stars" aria-hidden="true">
+							{Array.from({ length: 5 }).map(() => (
+								<svg viewBox="0 0 20 20" width="18" height="18" fill="currentColor">
+									<path d="M10 1.5l2.6 5.5 6 .7-4.4 4.1 1.2 6-5.4-3-5.4 3 1.2-6L1.4 7.7l6-.7z" />
+								</svg>
+							))}
+						</div>
+						<p class="t-card__quote">&ldquo;{t.quote}&rdquo;</p>
+						<div class="t-card__byline">
+							<span class:list={['t-card__avatar', `t-card__avatar--${avatarVariants[i % avatarVariants.length]}`]} aria-hidden="true">
+								{t.initials}
+							</span>
+							<span class="t-card__who">
+								<span class="t-card__name">{t.name}</span>
+								<span class="t-card__role">{t.role}</span>
+							</span>
+						</div>
+					</article>
+				))
+			}
+		</div>
+	</div>
+
+	<div class="t-slider__controls">
+		<button class="t-slider__btn" id="t-prev" aria-label="Previous testimonial" type="button">
+			<svg viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true">
+				<path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+			</svg>
+		</button>
+		<button class="t-slider__btn t-slider__btn--active" id="t-next" aria-label="Next testimonial" type="button">
+			<svg viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true">
+				<path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+			</svg>
+		</button>
+	</div>
+</section>
+
+<style>
+	.t-slider {
+		background: var(--cream);
+		padding-block: 3.5rem;
+		overflow: hidden;
+	}
+
+	@media (min-width: 768px) {
+		.t-slider {
+			padding-block: 5rem;
+		}
+	}
+
+	.t-slider__wrap {
+		overflow: hidden;
+	}
+
+	.t-slider__track {
+		display: flex;
+		align-items: stretch;
+		gap: 1.5rem;
+		will-change: transform;
+	}
+
+	@media (prefers-reduced-motion: no-preference) {
+		.t-slider__track {
+			transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+		}
+	}
+
+	.t-card {
+		flex-shrink: 0;
+		width: min(620px, 82vw);
+		background: var(--white);
+		border-radius: var(--radius-lg);
+		padding: 2rem 2.25rem;
+		box-shadow: none;
+		opacity: 0.4;
+		transition:
+			opacity 0.35s ease,
+			box-shadow 0.35s ease;
+	}
+
+	.t-card.is-active {
+		opacity: 1;
+		box-shadow: var(--shadow-soft);
+	}
+
+	.t-card__stars {
+		display: flex;
+		gap: 0.2rem;
+		color: var(--gold);
+		margin-bottom: 1.1rem;
+	}
+
+	.t-card__quote {
+		font-weight: 600;
+		font-size: 1.15rem;
+		line-height: 1.5;
+		color: var(--text-dark);
+		margin: 0 0 1.5rem;
+	}
+
+	.t-card__byline {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+	}
+
+	.t-card__avatar {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-shrink: 0;
+		width: 2.75rem;
+		height: 2.75rem;
+		border-radius: 999px;
+		font-family: var(--font-head);
+		font-weight: 700;
+		font-size: 0.85rem;
+		color: var(--white);
+	}
+
+	.t-card__avatar--plum {
+		background: var(--plum);
+	}
+
+	.t-card__avatar--terracotta {
+		background: var(--terracotta);
+	}
+
+	.t-card__avatar--gold {
+		background: var(--gold);
+		color: var(--text-dark);
+	}
+
+	.t-card__avatar--sage {
+		background: var(--sage);
+		color: var(--text-dark);
+	}
+
+	.t-card__who {
+		display: flex;
+		flex-direction: column;
+		line-height: 1.35;
+	}
+
+	.t-card__name {
+		font-weight: 700;
+		color: var(--text-dark);
+		font-size: 0.95rem;
+	}
+
+	.t-card__role {
+		color: var(--text-muted);
+		font-size: 0.85rem;
+	}
+
+	.t-slider__controls {
+		display: flex;
+		justify-content: center;
+		gap: 0.75rem;
+		margin-top: 2rem;
+	}
+
+	.t-slider__btn {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 2.75rem;
+		height: 2.75rem;
+		border-radius: 999px;
+		border: none;
+		background: rgba(44, 31, 23, 0.08);
+		color: var(--text-dark);
+		cursor: pointer;
+		transition: background-color 0.15s ease;
+	}
+
+	.t-slider__btn:hover {
+		background: rgba(44, 31, 23, 0.14);
+	}
+
+	.t-slider__btn--active {
+		background: var(--text-dark);
+		color: var(--white);
+	}
+
+	.t-slider__btn--active:hover {
+		background: var(--plum);
+	}
+</style>
+
+<script>
+	const wrap = document.querySelector<HTMLElement>('.t-slider__wrap');
+	const track = document.getElementById('t-track');
+	const prevBtn = document.getElementById('t-prev');
+	const nextBtn = document.getElementById('t-next');
+
+	if (wrap && track) {
+		const cards = Array.from(track.children) as HTMLElement[];
+		// Start one card in so both neighbors peek on load, matching the resting-state design
+		let current = 1;
+
+		const update = () => {
+			const card = cards[0];
+			if (!card) return;
+			const cardWidth = card.getBoundingClientRect().width;
+			const gap = parseFloat(getComputedStyle(track).gap || '0');
+			const step = cardWidth + gap;
+			const offset = wrap.clientWidth / 2 - cardWidth / 2 - current * step;
+			track.style.transform = `translateX(${offset}px)`;
+
+			cards.forEach((c, i) => c.classList.toggle('is-active', i === current));
+		};
+
+		prevBtn?.addEventListener('click', () => {
+			current = (current - 1 + cards.length) % cards.length;
+			update();
+		});
+
+		nextBtn?.addEventListener('click', () => {
+			current = (current + 1) % cards.length;
+			update();
+		});
+
+		window.addEventListener('resize', update);
+		update();
+	}
+</script>
