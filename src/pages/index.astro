@@ -4,6 +4,7 @@ import UtilityBar from '../components/UtilityBar.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import ImagePlaceholder from '../components/ImagePlaceholder.astro';
+import Photo from '../components/Photo.astro';
 import Reveal from '../components/Reveal.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 
@@ -41,7 +42,8 @@ const services = [
 		description:
 			"A dedicated caregiver for your family's daily rhythm, from North Hills to Cary.",
 		href: '/services/full-time-nanny',
-		photo: 'Photo: a nanny reading on the living room floor with two young kids, 800x600',
+		img: '/images/homepage/nanny-reading-circle.jpg',
+		alt: 'A caregiver reading a picture book aloud to a small circle of children',
 		hold: false,
 	},
 	{
@@ -49,7 +51,8 @@ const services = [
 		description:
 			'Flexible coverage that bends around school pickup, work travel, and everything in between.',
 		href: '/services/part-time-nanny',
-		photo: 'Photo: a nanny walking a child home from school in a Raleigh neighborhood, 800x600',
+		img: '/images/homepage/child-pointing-geese.jpg',
+		alt: "A caregiver holding a young boy's hand as he points out geese by a pond",
 		hold: false,
 	},
 	{
@@ -57,14 +60,16 @@ const services = [
 		description:
 			'Overnight and early-weeks support from someone who has done this hundreds of times.',
 		href: '/services/newborn-care-specialist',
-		photo: 'Photo: a newborn specialist holding a swaddled baby in a softly lit nursery, 800x600',
+		img: '/images/homepage/parent-phone-baby.jpg',
+		alt: 'A parent holding a baby close at home while checking their phone',
 		hold: false,
 	},
 	{
 		name: 'Backup & Temp Care',
 		description: 'When your regular care falls through, we have someone ready.',
 		href: '/services/backup-temp-care',
-		photo: 'Photo: a caregiver arriving at the front door, greeted by a smiling toddler, 800x600',
+		img: '/images/homepage/caregivers-kids-books-group.jpg',
+		alt: 'Caregivers reading picture books together with a small group of children',
 		hold: false,
 	},
 	{
@@ -72,14 +77,16 @@ const services = [
 		// HOLD: do not publish until the Household Manager service page is live, per Austin
 		description: '',
 		href: '/services/household-manager',
-		photo: '',
+		img: '',
+		alt: '',
 		hold: true,
 	},
 	{
 		name: 'Doulas & Newborn Support',
 		description: 'Support for the fourth trimester, on your schedule.',
 		href: '/services/doulas-newborn-support',
-		photo: 'Photo: a doula sitting with a new parent and baby at home, 800x600',
+		img: '/images/homepage/parents-swinging-toddler.jpg',
+		alt: 'Two parents swinging a laughing toddler between them in a garden',
 		hold: false,
 	},
 ].filter((service) => !service.hold);
@@ -89,27 +96,46 @@ const steps = [
 		n: '01',
 		title: 'Tell us about your household',
 		body: 'Your schedule, your kids, your must-haves. The details that never fit on a form are the ones we listen hardest for.',
-		photo: 'Photo: a parent talking with a placement coordinator over coffee, 800x600',
+		img: '/images/homepage/family-pond-geese.jpg',
+		alt: 'A family of three pausing together beside a pond lined with autumn trees',
 	},
 	{
 		n: '02',
 		title: 'We interview, verify, and check',
 		body: 'Every candidate meets us in person. References get a phone call, not an email. Background checks come before any introduction.',
-		photo: 'Photo: a nanny candidate in a warm in-person interview, 800x600',
+		img: '/images/homepage/kids-willow-tree.jpg',
+		alt: 'Two children smiling together under a willow tree',
 	},
 	{
 		n: '03',
 		title: 'You meet your matches',
 		body: 'We introduce the few who genuinely fit, then stay with you through the trial, the offer, and the first weeks.',
-		photo: 'Photo: a nanny meeting a family for the first time in their living room, 800x600',
+		img: '/images/homepage/nanny-reading-circle.jpg',
+		alt: 'A caregiver reading a picture book aloud to a small circle of children',
 	},
 ];
 
 const gallery = [
-	{ label: 'Photo: nanny and toddler blowing bubbles in the backyard, 600x750', ratio: '3-4' },
-	{ label: 'Photo: kids painting at the kitchen table with their nanny, 600x450', ratio: '4-3' },
-	{ label: 'Photo: a nanny buckling a child into a car seat, 600x750', ratio: '3-4' },
-	{ label: 'Photo: baby laughing during tummy time, 600x450', ratio: '4-3' },
+	{
+		img: '/images/homepage/parents-swinging-toddler.jpg',
+		alt: 'Two parents swinging a laughing toddler between them in a garden',
+		ratio: '3-4',
+	},
+	{
+		img: '/images/homepage/nanny-kids-playing-balls.jpg',
+		alt: 'A caregiver playing with two toddlers among scattered colorful balls',
+		ratio: '4-3',
+	},
+	{
+		img: '/images/homepage/child-pointing-geese.jpg',
+		alt: "A caregiver holding a young boy's hand as he points out geese by a pond",
+		ratio: '3-4',
+	},
+	{
+		img: '/images/homepage/family-pond-geese.jpg',
+		alt: 'A family of three pausing together beside a pond lined with autumn trees',
+		ratio: '4-3',
+	},
 ];
 ---
 
@@ -177,17 +203,19 @@ const gallery = [
 				<div class="container grid grid-2">
 					<div class="collage reveal">
 						<div class="collage__main">
-							<ImagePlaceholder
+							<Photo
 								ratio="3-4"
-								variant={1}
-								label="Photo: a parent on the phone at the kitchen table while a toddler tugs at their sleeve, 900x1200"
+								src="/images/homepage/parent-phone-baby.jpg"
+								alt="A parent holding a baby close at home while checking their phone"
+								objectPosition="center 25%"
 							/>
 						</div>
 						<div class="collage__inset">
-							<ImagePlaceholder
+							<Photo
 								ratio="1-1"
-								variant={4}
-								label="Photo: a nanny and preschooler building blocks together, 600x600"
+								src="/images/homepage/nanny-kids-playing-balls.jpg"
+								alt="A caregiver playing with two toddlers among scattered colorful balls"
+								objectPosition="center 30%"
 							/>
 						</div>
 					</div>
@@ -238,7 +266,7 @@ const gallery = [
 									style={`--reveal-delay:${(i % 3) * 90}ms`}
 								>
 									<div class="service-card__media">
-										<ImagePlaceholder ratio="4-3" variant={i + 1} label={service.photo} />
+										<Photo ratio="4-3" src={service.img} alt={service.alt} />
 									</div>
 									<div class="service-card__body">
 										<h3>{service.name}</h3>
@@ -290,7 +318,7 @@ const gallery = [
 							steps.map((step, i) => (
 								<div class="step reveal" style={`--reveal-delay:${i * 110}ms`}>
 									<div class="step__media">
-										<ImagePlaceholder ratio="4-3" variant={i + 2} label={step.photo} />
+										<Photo ratio="4-3" src={step.img} alt={step.alt} />
 										<span class="step__number">{step.n}</span>
 									</div>
 									<h3>{step.title}</h3>
@@ -316,11 +344,7 @@ const gallery = [
 						{
 							gallery.map((shot, i) => (
 								<div class="gallery__item reveal" style={`--reveal-delay:${i * 90}ms`}>
-									<ImagePlaceholder
-										ratio={shot.ratio as '3-4' | '4-3'}
-										variant={i + 3}
-										label={shot.label}
-									/>
+									<Photo ratio={shot.ratio as '3-4' | '4-3'} src={shot.img} alt={shot.alt} />
 								</div>
 							))
 						}
@@ -583,11 +607,6 @@ const gallery = [
 				width: 88%;
 			}
 
-			/* Keep the caption clear of the overlapping inset */
-			.collage__main :global(.ph__caption) {
-				max-width: 62%;
-			}
-
 			.collage__inset {
 				position: absolute;
 				right: 0;
@@ -669,12 +688,14 @@ const gallery = [
 				overflow: hidden;
 			}
 
-			.service-card__media :global(.ph) {
+			.service-card__media :global(.ph),
+			.service-card__media :global(.media) {
 				border-radius: 0;
 				transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 			}
 
-			.service-card:hover .service-card__media :global(.ph) {
+			.service-card:hover .service-card__media :global(.ph),
+			.service-card:hover .service-card__media :global(.media) {
 				transform: scale(1.05);
 			}
 

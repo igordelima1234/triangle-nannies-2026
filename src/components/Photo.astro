@@ -1,0 +1,41 @@
+---
+interface Props {
+	src: string;
+	alt: string;
+	ratio?: '4-3' | '1-1' | '3-4' | '16-9' | '3-2';
+	objectPosition?: string;
+	loading?: 'lazy' | 'eager';
+	class?: string;
+}
+
+const {
+	src,
+	alt,
+	ratio = '4-3',
+	objectPosition = 'center',
+	loading = 'lazy',
+	class: className = '',
+} = Astro.props;
+---
+
+<figure class:list={['media', `aspect-${ratio}`, className]}>
+	<img src={src} alt={alt} loading={loading} decoding="async" style={`object-position:${objectPosition}`} />
+</figure>
+
+<style>
+	.media {
+		position: relative;
+		margin: 0;
+		width: 100%;
+		border-radius: var(--radius-lg);
+		overflow: hidden;
+		background: var(--sage);
+	}
+
+	.media img {
+		display: block;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+</style>
