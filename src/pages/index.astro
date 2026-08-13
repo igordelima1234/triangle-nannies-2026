@@ -472,6 +472,11 @@ const gallery = [
 			.hero-stack > :global(.site-header--overlay) {
 				z-index: 10;
 				padding-inline: 0.75rem;
+				/* Grid items stretch to fill their cell by default, which made this
+				   transparent header cover the full hero height and silently block
+				   clicks on the headline/CTA beneath it. Keep it to its own content
+				   height, pinned to the top, instead. */
+				align-self: start;
 			}
 
 			.hero {

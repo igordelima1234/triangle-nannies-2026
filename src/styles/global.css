@@ -82,8 +82,7 @@ h6 {
 h1,
 h2,
 .statement {
-	text-transform: uppercase;
-	letter-spacing: 0.015em;
+	letter-spacing: -2px;
 }
 
 h1 {
