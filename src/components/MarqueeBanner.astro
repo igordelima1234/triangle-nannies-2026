@@ -1,0 +1,182 @@
+---
+// Builds a wavy ribbon (a filled band that follows a sine-like curve) plus a
+// centerline path for the text to ride along. Two identical copies of the
+// resulting SVG sit side by side and scroll left forever; since they're
+// pixel-identical, the loop point is invisible.
+
+interface Segment {
+	x0: number;
+	y0: number;
+	cx: number;
+	cy: number;
+	x1: number;
+	y1: number;
+}
+
+function waveSegments(width: number, baseline: number, amplitude: number, halfWave: number): Segment[] {
+	const segs: Segment[] = [];
+	let x = 0;
+	let y = baseline;
+	let up = true;
+	while (x < width) {
+		const cx = x + halfWave / 2;
+		const cy = baseline + (up ? -amplitude : amplitude);
+		const x1 = Math.min(x + halfWave, width);
+		segs.push({ x0: x, y0: y, cx, cy, x1, y1: baseline });
+		x = x1;
+		y = baseline;
+		up = !up;
+	}
+	return segs;
+}
+
+function forwardPath(segs: Segment[]) {
+	let d = `M${segs[0].x0},${segs[0].y0}`;
+	for (const s of segs) d += ` Q${s.cx},${s.cy} ${s.x1},${s.y1}`;
+	return d;
+}
+
+function reverseContinuation(segs: Segment[]) {
+	let d = '';
+	for (let i = segs.length - 1; i >= 0; i--) {
+		const s = segs[i];
+		d += ` Q${s.cx},${s.cy} ${s.x0},${s.y0}`;
+	}
+	return d;
+}
+
+const UNIT_WIDTH = 2000;
+const UNIT_HEIGHT = 300;
+const BASELINE = 150;
+const AMPLITUDE = 55;
+const HALF_WAVE = 250;
+const RIBBON_THICKNESS = 150;
+
+const centerSegs = waveSegments(UNIT_WIDTH, BASELINE, AMPLITUDE, HALF_WAVE);
+const centerPath = forwardPath(centerSegs);
+
+const topSegs = waveSegments(UNIT_WIDTH, BASELINE - RIBBON_THICKNESS / 2, AMPLITUDE, HALF_WAVE);
+const botSegs = waveSegments(UNIT_WIDTH, BASELINE + RIBBON_THICKNESS / 2, AMPLITUDE, HALF_WAVE);
+const lastBot = botSegs[botSegs.length - 1];
+const ribbonPath = `${forwardPath(topSegs)} L${lastBot.x1},${lastBot.y1}${reverseContinuation(botSegs)} Z`;
+
+const missionFull =
+	'Real trust between families and caregivers, built one relationship at a time';
+const missionLoop = 'Real trust, one relationship at a time';
+const repeated = Array.from({ length: 4 }, () => missionLoop).join('  •  ') + '  •  ';
+---
+
+<section class="marquee-banner" aria-label="Our mission">
+	<div class="marquee-banner__media">
+		<img
+			src="/images/homepage/caregivers-kids-books-group.jpg"
+			alt=""
+			loading="lazy"
+			decoding="async"
+		/>
+	</div>
+
+	<p class="sr-only">{missionFull}.</p>
+
+	<div class="marquee-banner__track" aria-hidden="true">
+		{
+			[0, 1].map((copy) => (
+				<svg
+					class="marquee-banner__unit"
+					viewBox={`0 0 ${UNIT_WIDTH} ${UNIT_HEIGHT}`}
+					preserveAspectRatio="none"
+				>
+					<defs>
+						<path id={`wave-center-${copy}`} d={centerPath} />
+					</defs>
+					<path class="marquee-banner__ribbon" d={ribbonPath} />
+					<text class="marquee-banner__text">
+						<textPath href={`#wave-center-${copy}`} startOffset="0">
+							{repeated}
+						</textPath>
+					</text>
+				</svg>
+			))
+		}
+	</div>
+</section>
+
+<style>
+	.marquee-banner {
+		position: relative;
+		overflow: hidden;
+		min-height: 16rem;
+		display: flex;
+		align-items: center;
+		background: var(--plum);
+	}
+
+	@media (min-width: 768px) {
+		.marquee-banner {
+			min-height: 22rem;
+		}
+	}
+
+	.marquee-banner__media {
+		position: absolute;
+		inset: 0;
+		z-index: 0;
+	}
+
+	.marquee-banner__media img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		object-position: center 30%;
+	}
+
+	.marquee-banner__track {
+		position: relative;
+		z-index: 1;
+		display: flex;
+		width: max-content;
+		animation: marquee-scroll 32s linear infinite;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.marquee-banner__track {
+			animation-play-state: paused;
+		}
+	}
+
+	.marquee-banner__unit {
+		width: 44rem;
+		height: 12rem;
+		flex-shrink: 0;
+		overflow: visible;
+	}
+
+	@media (min-width: 768px) {
+		.marquee-banner__unit {
+			width: 60rem;
+			height: 16rem;
+		}
+	}
+
+	.marquee-banner__ribbon {
+		fill: var(--plum);
+		filter: drop-shadow(0 10px 24px rgba(20, 12, 8, 0.35));
+	}
+
+	.marquee-banner__text {
+		font-family: var(--font-head);
+		font-weight: 700;
+		font-size: 68px;
+		letter-spacing: -1px;
+		fill: var(--cream);
+	}
+
+	@keyframes marquee-scroll {
+		from {
+			transform: translateX(0);
+		}
+		to {
+			transform: translateX(-50%);
+		}
+	}
+</style>
