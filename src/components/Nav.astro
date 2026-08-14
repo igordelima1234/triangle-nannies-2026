@@ -15,18 +15,30 @@ const { overlay = false } = Astro.props;
 			<img src="/images/logos/tn-logo-full-light.svg" alt={SITE_TITLE} width="874" height="200" />
 		</a>
 
-		<button class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="primary-nav">
-			<span class="sr-only">Open menu</span>
-			<svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true">
-				<path d="M4 8h18M4 13h18M4 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-			</svg>
+		<button class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="primary-nav" aria-label="Open menu">
+			<span class="nav-toggle__bars" aria-hidden="true">
+				<span></span><span></span><span></span>
+			</span>
 		</button>
 
+		<div class="nav-backdrop" id="nav-backdrop"></div>
+
 		<nav class="primary-nav" id="primary-nav">
+			<div class="primary-nav__header">
+				<span class="primary-nav__header-label">Menu</span>
+				<button class="nav-close" id="nav-close" aria-label="Close menu">
+					<svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+						<path d="M2 2l14 14M16 2L2 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+					</svg>
+				</button>
+			</div>
 			<ul class="primary-nav__list">
 				<li class="has-dropdown">
 					<button class="primary-nav__link dropdown-trigger" aria-expanded="false" aria-controls="services-menu">
-						Services <span aria-hidden="true">▾</span>
+						Services
+						<svg class="dropdown-chevron" width="12" height="8" viewBox="0 0 12 8" fill="none" aria-hidden="true">
+							<path d="M1 1.5l5 5 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+						</svg>
 					</button>
 					<ul class="dropdown-menu" id="services-menu">
 						<li><a href="/services/full-time-nanny">Full-Time Nanny</a></li>
@@ -42,7 +54,15 @@ const { overlay = false } = Astro.props;
 				<li><HeaderLink class="primary-nav__link" href="/blog">Blog</HeaderLink></li>
 				<li><HeaderLink class="primary-nav__link" href="/contact">Contact</HeaderLink></li>
 			</ul>
-			<a href="/get-started" class="btn btn-primary nav-cta">Get Started</a>
+			<div class="primary-nav__footer">
+				<a href="tel:19195550100" class="nav-call">
+					<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+						<path d="M2.5 2.5c0-.5.4-1 1-1h1.8c.4 0 .8.3.9.7l.7 2.4c.1.4 0 .8-.3 1.1L5.4 6.9a9 9 0 0 0 3.7 3.7l1.2-1.2c.3-.3.7-.4 1.1-.3l2.4.7c.4.1.7.5.7.9v1.8c0 .6-.5 1-1 1C7.9 13.5 2.5 8.1 2.5 2.5z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
+					</svg>
+					(919) 555-0100
+				</a>
+				<a href="/get-started" class="btn btn-primary nav-cta">Get Started</a>
+			</div>
 		</nav>
 	</div>
 </header>
@@ -52,7 +72,7 @@ const { overlay = false } = Astro.props;
 		background: var(--plum);
 		position: sticky;
 		top: 0;
-		z-index: 100;
+		z-index: 120;
 		box-shadow: 0 2px 12px rgba(44, 31, 23, 0.15);
 	}
 
@@ -107,44 +127,156 @@ const { overlay = false } = Astro.props;
 		border: none;
 		color: var(--white);
 		display: flex;
-		padding: 0.4rem;
+		align-items: center;
+		justify-content: center;
+		width: 2.5rem;
+		height: 2.5rem;
+		padding: 0;
 		cursor: pointer;
+		position: relative;
+		z-index: 5;
+	}
+
+	.nav-toggle__bars {
+		position: relative;
+		width: 22px;
+		height: 16px;
+		display: block;
+	}
+
+	.nav-toggle__bars span {
+		position: absolute;
+		left: 0;
+		width: 100%;
+		height: 2px;
+		border-radius: 2px;
+		background: currentColor;
+		transition: transform 0.25s ease, opacity 0.2s ease, top 0.25s ease;
+	}
+
+	.nav-toggle__bars span:nth-child(1) {
+		top: 0;
+	}
+
+	.nav-toggle__bars span:nth-child(2) {
+		top: 7px;
+	}
+
+	.nav-toggle__bars span:nth-child(3) {
+		top: 14px;
+	}
+
+	.nav-toggle[aria-expanded='true'] .nav-toggle__bars span:nth-child(1) {
+		top: 7px;
+		transform: rotate(45deg);
+	}
+
+	.nav-toggle[aria-expanded='true'] .nav-toggle__bars span:nth-child(2) {
+		opacity: 0;
+	}
+
+	.nav-toggle[aria-expanded='true'] .nav-toggle__bars span:nth-child(3) {
+		top: 7px;
+		transform: rotate(-45deg);
+	}
+
+	.nav-backdrop {
+		position: fixed;
+		inset: 0;
+		background: rgba(44, 31, 23, 0.45);
+		opacity: 0;
+		pointer-events: none;
+		transition: opacity 0.25s ease;
+		z-index: 115;
+	}
+
+	.nav-backdrop.is-open {
+		opacity: 1;
+		pointer-events: auto;
 	}
 
 	.primary-nav {
 		position: fixed;
 		inset: 0 0 0 auto;
-		width: min(320px, 85vw);
+		width: min(340px, 88vw);
 		background: var(--plum);
-		padding: 5.5rem 1.5rem 2rem;
+		padding: 1.25rem 1.5rem 1.5rem;
 		transform: translateX(100%);
-		transition: transform 0.25s ease;
+		transition: transform 0.3s ease;
 		overflow-y: auto;
+		z-index: 118;
+		display: flex;
+		flex-direction: column;
+		box-shadow: -12px 0 32px rgba(44, 31, 23, 0.25);
 	}
 
 	.primary-nav.is-open {
 		transform: translateX(0);
 	}
 
+	.primary-nav__header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding-bottom: 1rem;
+		margin-bottom: 0.5rem;
+		border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+	}
+
+	.primary-nav__header-label {
+		color: rgba(255, 255, 255, 0.6);
+		font-size: 0.8rem;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		font-weight: 600;
+	}
+
+	.nav-close {
+		background: rgba(255, 255, 255, 0.1);
+		border: none;
+		color: var(--white);
+		width: 2.25rem;
+		height: 2.25rem;
+		border-radius: 50%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		cursor: pointer;
+		transition: background 0.2s ease;
+	}
+
+	.nav-close:hover {
+		background: rgba(255, 255, 255, 0.2);
+	}
+
 	.primary-nav__list {
 		list-style: none;
 		display: flex;
 		flex-direction: column;
-		gap: 0.25rem;
+		gap: 0.1rem;
 	}
 
 	.primary-nav__link {
-		display: block;
-		padding: 0.75rem 0;
+		display: flex;
+		align-items: center;
+		padding: 0.95rem 0.75rem;
+		margin-inline: -0.75rem;
 		color: var(--white);
 		text-decoration: none;
 		font-weight: 500;
+		font-size: 1.05rem;
 		background: none;
 		border: none;
-		font-size: 1rem;
+		border-left: 3px solid transparent;
+		border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 		text-align: left;
-		width: 100%;
+		width: calc(100% + 1.5rem);
 		cursor: pointer;
+		transition: color 0.2s ease, padding-left 0.2s ease, border-color 0.2s ease;
+	}
+
+	.primary-nav__link:hover {
+		padding-left: 1rem;
 	}
 
 	.primary-nav__link:hover,
@@ -152,23 +284,47 @@ const { overlay = false } = Astro.props;
 		color: var(--gold);
 	}
 
+	.primary-nav__link.active {
+		border-left-color: var(--gold);
+	}
+
+	.has-dropdown .dropdown-trigger {
+		justify-content: space-between;
+	}
+
+	.dropdown-chevron {
+		display: inline-block;
+		margin-left: 0.5em;
+		transition: transform 0.2s ease;
+		color: rgba(255, 255, 255, 0.5);
+	}
+
+	.dropdown-trigger[aria-expanded='true'] .dropdown-chevron {
+		transform: rotate(180deg);
+		color: var(--gold);
+	}
+
 	.dropdown-menu {
 		list-style: none;
-		display: none;
-		flex-direction: column;
+		max-height: 0;
+		overflow: hidden;
+		opacity: 0;
 		padding-left: 1rem;
 		border-left: 2px solid rgba(255, 255, 255, 0.2);
-		margin-bottom: 0.5rem;
+		margin-left: 0.25rem;
+		transition: max-height 0.3s ease, opacity 0.2s ease;
 	}
 
 	.dropdown-menu.is-open {
-		display: flex;
+		max-height: 20rem;
+		opacity: 1;
+		margin-bottom: 0.35rem;
 	}
 
 	.dropdown-menu a {
 		display: block;
-		padding: 0.5rem 0;
-		color: rgba(255, 255, 255, 0.85);
+		padding: 0.6rem 0.25rem;
+		color: rgba(255, 255, 255, 0.8);
 		text-decoration: none;
 		font-size: 0.95rem;
 	}
@@ -177,9 +333,37 @@ const { overlay = false } = Astro.props;
 		color: var(--gold);
 	}
 
+	.primary-nav__footer {
+		margin-top: auto;
+		padding-top: 1.25rem;
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+	}
+
+	.nav-call {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.5rem;
+		color: var(--white);
+		text-decoration: none;
+		font-weight: 600;
+		font-size: 0.95rem;
+		padding: 0.85rem 1rem;
+		border: 1px solid rgba(255, 255, 255, 0.3);
+		border-radius: 999px;
+		transition: background 0.2s ease, border-color 0.2s ease;
+	}
+
+	.nav-call:hover {
+		background: rgba(255, 255, 255, 0.1);
+		border-color: rgba(255, 255, 255, 0.5);
+	}
+
 	.nav-cta {
-		margin-top: 1.5rem;
 		width: 100%;
+		text-align: center;
 	}
 
 	@media (min-width: 960px) {
@@ -218,6 +402,16 @@ const { overlay = false } = Astro.props;
 			position: relative;
 		}
 
+		.primary-nav__header,
+		.nav-close,
+		.primary-nav__footer .nav-call {
+			display: none;
+		}
+
+		.primary-nav__footer {
+			display: contents;
+		}
+
 		.dropdown-menu {
 			position: absolute;
 			top: 100%;
@@ -229,6 +423,17 @@ const { overlay = false } = Astro.props;
 			min-width: 220px;
 			border-left: none;
 			margin-top: 0.5rem;
+			max-height: 0;
+			overflow: hidden;
+			opacity: 0;
+			transition: opacity 0.15s ease;
+			pointer-events: none;
+		}
+
+		.dropdown-menu.is-open {
+			max-height: none;
+			opacity: 1;
+			pointer-events: auto;
 		}
 
 		.dropdown-menu a {
@@ -240,6 +445,22 @@ const { overlay = false } = Astro.props;
 		.dropdown-menu a:hover {
 			background: var(--cream);
 			color: var(--text-dark);
+		}
+
+		.primary-nav__link {
+			border-left: none;
+			border-bottom: none;
+			margin-inline: 0;
+			width: auto;
+			padding: 0.6rem 0.9rem;
+		}
+
+		.primary-nav__link:hover {
+			padding-left: 0.9rem;
+		}
+
+		.primary-nav__link.active {
+			border-left: none;
 		}
 
 		.nav-cta {
@@ -306,15 +527,55 @@ const { overlay = false } = Astro.props;
 			margin-top: 0.75rem;
 		}
 	}
+
+	:global(body.nav-locked) {
+		overflow: hidden;
+	}
 </style>
 
 <script>
 	const toggle = document.getElementById('nav-toggle');
+	const close = document.getElementById('nav-close');
 	const nav = document.getElementById('primary-nav');
+	const backdrop = document.getElementById('nav-backdrop');
+	const header = toggle?.closest('.site-header') as HTMLElement | null;
+
+	const openNav = () => {
+		nav?.classList.add('is-open');
+		backdrop?.classList.add('is-open');
+		toggle?.setAttribute('aria-expanded', 'true');
+		document.body.classList.add('nav-locked');
+		// Some page templates (e.g. the transparent hero overlay header) give
+		// .site-header a low page-specific z-index that outranks anything set
+		// here by CSS specificity. An inline style always wins, so the open
+		// menu reliably sits above other fixed/sticky chrome like the utility bar.
+		if (header) header.style.zIndex = '200';
+	};
+
+	const closeNav = () => {
+		nav?.classList.remove('is-open');
+		backdrop?.classList.remove('is-open');
+		toggle?.setAttribute('aria-expanded', 'false');
+		document.body.classList.remove('nav-locked');
+		if (header) header.style.zIndex = '';
+		toggle?.focus();
+	};
 
 	toggle?.addEventListener('click', () => {
-		const isOpen = nav?.classList.toggle('is-open');
-		toggle.setAttribute('aria-expanded', String(Boolean(isOpen)));
+		if (nav?.classList.contains('is-open')) {
+			closeNav();
+		} else {
+			openNav();
+		}
+	});
+
+	close?.addEventListener('click', closeNav);
+	backdrop?.addEventListener('click', closeNav);
+
+	document.addEventListener('keydown', (event) => {
+		if (event.key === 'Escape' && nav?.classList.contains('is-open')) {
+			closeNav();
+		}
 	});
 
 	const dropdownTrigger = document.querySelector('.dropdown-trigger');

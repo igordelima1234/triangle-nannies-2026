@@ -37,11 +37,15 @@
 
 html {
 	scroll-behavior: smooth;
+	overflow-x: hidden;
+	width: 100%;
 }
 
 body {
+	position: relative;
 	margin: 0;
 	padding: 0;
+	width: 100%;
 	font-family: var(--font-body);
 	font-weight: 400;
 	font-size: 17px;
@@ -50,12 +54,14 @@ body {
 	background: var(--white);
 	word-wrap: break-word;
 	overflow-wrap: break-word;
+	overflow-x: hidden;
 }
 
 img {
 	max-width: 100%;
 	height: auto;
 	display: block;
+	border-radius: 10px;
 }
 
 a {
@@ -76,13 +82,13 @@ h6 {
 	color: var(--text-dark);
 	line-height: 1.15;
 	font-family: var(--font-head);
-	font-weight: 700;
+	font-weight: 600;
 }
 
 h1,
 h2,
 .statement {
-	letter-spacing: -2px;
+	letter-spacing: -0.5px;
 }
 
 h1 {
@@ -96,7 +102,7 @@ h2 {
 h3 {
 	font-size: 1.35rem;
 	text-transform: none;
-	letter-spacing: -0.01em;
+	letter-spacing: 0;
 }
 
 p {
@@ -193,6 +199,25 @@ summary:focus-visible {
 
 .section--plum h2,
 .section--plum p {
+	color: var(--white);
+}
+
+.final-cta {
+	background: var(--cream);
+}
+
+.final-cta.section--plum h2,
+.final-cta.section--plum .lede {
+	color: var(--text-dark);
+}
+
+.final-cta .btn-primary {
+	background: var(--terracotta-dark);
+	color: var(--white);
+}
+
+.final-cta .btn-primary:hover {
+	background: var(--plum);
 	color: var(--white);
 }
 

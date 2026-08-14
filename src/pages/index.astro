@@ -3,30 +3,17 @@ import BaseHead from '../components/BaseHead.astro';
 import UtilityBar from '../components/UtilityBar.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
-import ImagePlaceholder from '../components/ImagePlaceholder.astro';
 import Photo from '../components/Photo.astro';
 import Reveal from '../components/Reveal.astro';
 import TestimonialSlider from '../components/TestimonialSlider.astro';
-import MarqueeBanner from '../components/MarqueeBanner.astro';
+import CommunityVideos from '../components/CommunityVideos.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 
 const trustStrip = [
-	{
-		text: '15+ years placing nannies in the Triangle',
-		icon: 'M12 2l2.4 6.6L21 10l-5.4 4.2L17 21l-5-3.6L7 21l1.4-6.8L3 10l6.6-1.4z',
-	},
-	{
-		text: 'Every candidate interviewed in person',
-		icon: 'M12 2a5 5 0 100 10 5 5 0 000-10zM4 21a8 8 0 0116 0',
-	},
-	{
-		text: 'References verified by phone, not just email',
-		icon: 'M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.13.96.36 1.9.68 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.32 1.85.55 2.81.68A2 2 0 0122 16.92z',
-	},
-	{
-		text: 'Background checks before any introduction is made',
-		icon: 'M12 2l8 4v6c0 5-3.4 8.4-8 10-4.6-1.6-8-5-8-10V6z',
-	},
+	{ text: '15+ years placing nannies in the Triangle' },
+	{ text: 'Every candidate interviewed in person' },
+	{ text: 'References verified by phone, not just email' },
+	{ text: 'Background checks before any introduction is made' },
 ];
 
 const soundFamiliar = [
@@ -117,28 +104,39 @@ const steps = [
 	},
 ];
 
-const gallery = [
+const statementStickers = [
 	{
-		img: '/images/homepage/parents-swinging-toddler.jpg',
-		alt: 'Two parents swinging a laughing toddler between them in a garden',
-		ratio: '3-4',
+		src: '/images/homepage/stickers/austin-sticker.png',
+		alt: '',
+		style: 'top:-14%; left:3.5%; width:11rem; rotate:-16deg;',
 	},
 	{
-		img: '/images/homepage/nanny-kids-playing-balls.jpg',
-		alt: 'A caregiver playing with two toddlers among scattered colorful balls',
-		ratio: '4-3',
+		src: '/images/homepage/stickers/carrie-sticker.png',
+		alt: '',
+		style: 'top:-20%; left:36%; width:9rem; rotate:9deg;',
 	},
 	{
-		img: '/images/homepage/child-pointing-geese.jpg',
-		alt: "A caregiver holding a young boy's hand as he points out geese by a pond",
-		ratio: '3-4',
+		src: '/images/homepage/stickers/igor-sticker.png',
+		alt: '',
+		style: 'top:-10%; right:5%; width:12.5rem; rotate:13deg;',
 	},
 	{
-		img: '/images/homepage/family-pond-geese.jpg',
-		alt: 'A family of three pausing together beside a pond lined with autumn trees',
-		ratio: '4-3',
+		src: '/images/homepage/stickers/kara-sticker.png',
+		alt: '',
+		style: 'top:70%; right:22%; width:12rem; rotate:-8deg;',
+	},
+	{
+		src: '/images/homepage/stickers/mara-sticker.png',
+		alt: '',
+		style: 'top:66%; right:3.5%; width:10.5rem; rotate:-19deg;',
+	},
+	{
+		src: '/images/homepage/stickers/noelle-sticker.png',
+		alt: '',
+		style: 'top:66%; left:14%; width:10.5rem; rotate:8deg;',
 	},
 ];
+
 ---
 
 <!doctype html>
@@ -165,12 +163,8 @@ const gallery = [
 				<div class="hero__scrim" aria-hidden="true"></div>
 				<div class="container hero__content">
 					<h1>Connecting vibrant families with extraordinary Triangle caregivers.</h1>
-					<p class="lede hero__lede">
-						We've been matching Triangle families with nannies they actually trust for more
-						than 15 years. Raleigh, Durham, Chapel Hill, Cary, and everywhere in between.
-					</p>
 					<div class="hero__actions">
-						<a class="btn btn-primary" href="/get-started">Start Your Search</a>
+						<a class="btn btn-primary" href="/family-application">Start Your Search</a>
 					</div>
 					<a class="link-arrow hero__secondary" href="/candidates">Looking for nanny work? →</a>
 				</div>
@@ -179,7 +173,6 @@ const gallery = [
 
 		<main id="main">
 			<TestimonialSlider />
-			<MarqueeBanner />
 
 			<!-- Trust strip -->
 			<section class="trust-strip" aria-label="Why families trust Triangle Nannies">
@@ -187,13 +180,19 @@ const gallery = [
 					{
 						trustStrip.map((item, i) => (
 							<div class="trust-strip__item reveal" style={`--reveal-delay:${i * 80}ms`}>
-								<svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+								<svg width="40" height="40" viewBox="0 0 73 73" fill="none" aria-hidden="true">
+									<rect
+										x="36.163"
+										y="-4.14214"
+										width="57"
+										height="57"
+										rx="10"
+										transform="rotate(45 36.163 -4.14214)"
+										fill="#FEB469"
+									/>
 									<path
-										d={item.icon}
-										stroke="currentColor"
-										stroke-width="1.8"
-										stroke-linecap="round"
-										stroke-linejoin="round"
+										d="M35.2174 12.4268C35.3075 11.6682 36.4083 11.6682 36.4984 12.4268L37.2535 18.7908C38.2285 27.0083 44.7075 33.4872 52.925 34.4623L59.2889 35.2174C60.0476 35.3075 60.0476 36.4083 59.2889 36.4983L52.925 37.2535C44.7075 38.2285 38.2285 44.7074 37.2535 52.9249L36.4984 59.2889C36.4083 60.0475 35.3075 60.0475 35.2174 59.2889L34.4623 52.9249C33.4873 44.7074 27.0084 38.2285 18.7908 37.2535L12.4269 36.4983C11.6683 36.4083 11.6683 35.3075 12.4269 35.2174L18.7908 34.4623C27.0084 33.4872 33.4873 27.0083 34.4623 18.7908L35.2174 12.4268Z"
+										fill="#FFECD1"
 									/>
 								</svg>
 								<span>{item.text}</span>
@@ -226,7 +225,7 @@ const gallery = [
 					</div>
 					<div class="reveal" style="--reveal-delay:120ms">
 						<span class="eyebrow">For Families</span>
-						<h2>Most families come to us after something stopped working.</h2>
+						<h2>This is a hire you want to get right the first time.</h2>
 						<p class="lede">
 							The daycare waitlist that never cleared. The schedule that became impossible the
 							second school let out early. The care that fell through with two days' notice. We
@@ -255,12 +254,42 @@ const gallery = [
 				</div>
 			</section>
 
+			<!-- Services marquee -->
+			<section class="services-marquee reveal" aria-label="Services we place">
+				<div class="services-marquee__track">
+					{
+						Array.from({ length: 2 }).map((_, setIndex) =>
+							services.map((service) => (
+								<div class="services-marquee__item" aria-hidden={setIndex === 1 ? 'true' : undefined}>
+									<span>{service.name}</span>
+									<svg width="28" height="28" viewBox="0 0 73 73" fill="none" aria-hidden="true">
+										<rect
+											x="36.163"
+											y="-4.14214"
+											width="57"
+											height="57"
+											rx="10"
+											transform="rotate(45 36.163 -4.14214)"
+											fill="#FEB469"
+										/>
+										<path
+											d="M35.2174 12.4268C35.3075 11.6682 36.4083 11.6682 36.4984 12.4268L37.2535 18.7908C38.2285 27.0083 44.7075 33.4872 52.925 34.4623L59.2889 35.2174C60.0476 35.3075 60.0476 36.4083 59.2889 36.4983L52.925 37.2535C44.7075 38.2285 38.2285 44.7074 37.2535 52.9249L36.4984 59.2889C36.4083 60.0475 35.3075 60.0475 35.2174 59.2889L34.4623 52.9249C33.4873 44.7074 27.0084 38.2285 18.7908 37.2535L12.4269 36.4983C11.6683 36.4083 11.6683 35.3075 12.4269 35.2174L18.7908 34.4623C27.0084 33.4872 33.4873 27.0083 34.4623 18.7908L35.2174 12.4268Z"
+											fill="#FFECD1"
+										/>
+									</svg>
+								</div>
+							))
+						)
+					}
+				</div>
+			</section>
+
 			<!-- Service cards -->
 			<section class="section">
 				<div class="container">
 					<div class="section-head section-head--center reveal">
 						<span class="eyebrow">What We Place</span>
-						<h2>Whatever your household needs, we've placed it.</h2>
+						<h2>Your home is your haven.<br>We’ve got your crew.</h2>
 					</div>
 					<div class="service-grid">
 						{
@@ -289,6 +318,20 @@ const gallery = [
 
 			<!-- Statement band -->
 			<section class="statement-band">
+				<div class="statement-band__stickers" aria-hidden="true">
+					{
+						statementStickers.map((sticker) => (
+							<img class="statement-band__sticker" src={sticker.src} alt="" style={sticker.style} />
+						))
+					}
+				</div>
+				<img
+					class="statement-band__sticker statement-band__sticker--mobile"
+					src="/images/homepage/stickers/austin-sticker.png"
+					alt=""
+					aria-hidden="true"
+					style="top:-6%; right:5%; width:9.5rem; rotate:-14deg;"
+				/>
 				<div class="container statement-band__inner">
 					<p class="statement-band__figure reveal">
 						<span class="statement-band__number">15</span>
@@ -300,7 +343,7 @@ const gallery = [
 							Raleigh, Durham, Chapel Hill, Cary, and everywhere in between. One conversation to
 							start.
 						</p>
-						<a class="btn btn-primary" href="/get-started">Start Your Search</a>
+						<a class="btn btn-primary" href="/family-application">Start Your Search</a>
 					</div>
 				</div>
 			</section>
@@ -324,7 +367,30 @@ const gallery = [
 								<div class="step reveal" style={`--reveal-delay:${i * 110}ms`}>
 									<div class="step__media">
 										<Photo ratio="4-3" src={step.img} alt={step.alt} />
-										<span class="step__number">{step.n}</span>
+										<span class="step__number">
+											<svg
+												class="step__number-shape"
+												viewBox="0 0 226 266"
+												fill="none"
+												xmlns="http://www.w3.org/2000/svg"
+												aria-hidden="true"
+											>
+												<path
+													d="M42.8258 1.04307C42.991 -0.34769 45.0091 -0.34769 45.1742 1.04307L46.5586 12.7103C48.3462 27.7758 60.2242 39.6539 75.2896 41.4414L86.9568 42.8258C88.3477 42.991 88.3477 45.0091 86.9568 45.1742L75.2896 46.5586C60.2242 48.3462 48.3462 60.2242 46.5586 75.2896L45.1742 86.9568C45.0091 88.3477 42.991 88.3477 42.8258 86.9568L41.4414 75.2896C39.6539 60.2242 27.7758 48.3462 12.7103 46.5586L1.04307 45.1742C-0.34769 45.0091 -0.34769 42.991 1.04307 42.8258L12.7103 41.4414C27.7758 39.6539 39.6539 27.7758 41.4414 12.7103L42.8258 1.04307Z"
+													fill="#69536A"
+												></path>
+												<rect
+													x="120"
+													y="44"
+													width="164.049"
+													height="164.049"
+													rx="25.5551"
+													transform="rotate(45 120 44)"
+													fill="#69536A"
+												></rect>
+											</svg>
+											<span class="step__number-value">{step.n}</span>
+										</span>
 									</div>
 									<h3>{step.title}</h3>
 									<p>{step.body}</p>
@@ -338,51 +404,14 @@ const gallery = [
 				</div>
 			</section>
 
-			<!-- Gallery strip -->
-			<section class="gallery" aria-label="Life with a Triangle Nannies caregiver">
-				<div class="container">
-					<div class="gallery__head reveal">
-						<span class="eyebrow">Everyday Moments</span>
-						<h2>The ordinary days are the whole point.</h2>
-					</div>
-					<div class="gallery__grid">
-						{
-							gallery.map((shot, i) => (
-								<div class="gallery__item reveal" style={`--reveal-delay:${i * 90}ms`}>
-									<Photo ratio={shot.ratio as '3-4' | '4-3'} src={shot.img} alt={shot.alt} />
-								</div>
-							))
-						}
-					</div>
-				</div>
-			</section>
-
-			<!-- Split CTA banner -->
-			<section class="split-cta">
-				<div class="split-cta__panel split-cta__panel--families">
-					<div class="split-cta__content reveal">
-						<h2>Ready to find your match?</h2>
-						<p>Tell us what your family needs and we'll take it from there.</p>
-						<a class="btn btn-primary" href="/get-started">Start Your Search</a>
-					</div>
-				</div>
-				<div class="split-cta__panel split-cta__panel--candidates">
-					<div class="split-cta__content reveal" style="--reveal-delay:120ms">
-						<h2>Your next great family is waiting.</h2>
-						<p>And we do the work to make sure they're ready for you, too.</p>
-						<a class="btn btn-primary" href="/apply">Apply to Join Our Network</a>
-					</div>
-				</div>
-			</section>
-
 			<!-- Meet Austin -->
 			<section class="section section--plum">
 				<div class="container grid grid-2">
 					<div class="reveal">
-						<ImagePlaceholder
+						<Photo
 							ratio="1-1"
-							variant={6}
-							label="Photo: Austin Macfarlane, founder of Triangle Nannies, 900x900"
+							src="/images/homepage/austin-macfarlane-founder.webp"
+							alt="Austin Macfarlane, founder of Triangle Nannies"
 						/>
 					</div>
 					<div class="reveal" style="--reveal-delay:120ms">
@@ -403,55 +432,92 @@ const gallery = [
 			</section>
 
 			<!-- Trusted By / Community -->
-			<section class="section">
+			<section class="section section--plum section--tight-top">
 				<div class="container">
 					<div class="section-head section-head--center reveal">
 						<span class="eyebrow">In the Community</span>
 						<h2>Proud to be part of the Triangle.</h2>
 					</div>
-					<div class="logo-row" aria-label="Community partners, coming soon">
+				</div>
+				<div class="marquee reveal" style="--reveal-delay:120ms">
+					<div class="marquee__track">
 						{
-							Array.from({ length: 5 }).map((_, i) => (
-								<div class="logo-frame reveal" style={`--reveal-delay:${i * 80}ms`}>
-									<span aria-hidden="true">Partner logo</span>
-								</div>
-							))
+							Array.from({ length: 2 }).map((_, setIndex) =>
+								[
+									{ src: "/images/homepage/partners/triangle-business-journal.webp", alt: "Triangle Business Journal" },
+									{ src: "/images/homepage/partners/partner-2.webp", alt: "UNC Health Care" },
+									{ src: "/images/homepage/partners/duke.webp", alt: "Duke University" },
+									{ src: "/images/homepage/partners/partner-4.webp", alt: "Community partner" },
+									{ src: "/images/homepage/partners/partner-5.webp", alt: "The Raleigh School" },
+									{ src: "/images/homepage/partners/partner-6.webp", alt: "Hodge & Kittrell Sotheby's International Realty" },
+									{ src: "/images/homepage/partners/partner-7.webp", alt: "Community partner" },
+								].map((logo) => (
+									<div class="marquee__item" aria-hidden={setIndex === 1 ? "true" : undefined}>
+										<img src={logo.src} alt={setIndex === 1 ? "" : logo.alt} loading="lazy" />
+									</div>
+								))
+							)
 						}
 					</div>
 				</div>
 			</section>
 
-			<!-- Testimonials -->
-			<section class="section section--cream">
-				<div class="container">
-					<div class="section-head section-head--center reveal">
-						<span class="eyebrow">What Families Say</span>
-					</div>
-					<div class="testimonial-row reveal" style="--reveal-delay:120ms">
-						<figure class="card testimonial-card">
-							<span class="testimonial-card__tag">Sample review, replace with real content</span>
-							<blockquote>
-								"This is placeholder testimonial copy standing in for a real Google Business
-								Profile review. Swap this card for live review content before launch."
-							</blockquote>
-							<figcaption>Placeholder Reviewer, Cary, NC</figcaption>
-						</figure>
-					</div>
-				</div>
-			</section>
+			<CommunityVideos />
 
 			<!-- Final CTA band -->
-			<section class="section section--plum final-cta">
-				<div class="container final-cta__inner reveal">
+			<section class="final-cta reveal">
+				<div class="final-cta__copy">
+					<span class="eyebrow">Ready when you are</span>
 					<h2>Let's find the right person for your family.</h2>
 					<p class="lede">Fifteen years in the Triangle. One conversation to start.</p>
 					<a class="btn btn-primary" href="/get-started">Get Started</a>
+				</div>
+				<div class="final-cta__media" data-parallax>
+					<img
+						src="/images/homepage/parents-swinging-toddler.jpg"
+						alt="A parent swinging a laughing toddler outdoors"
+						data-parallax-img
+						loading="lazy"
+					/>
 				</div>
 			</section>
 		</main>
 
 		<Footer />
 		<Reveal />
+
+		<script>
+			const parallaxEls = document.querySelectorAll<HTMLElement>('[data-parallax]');
+
+			if (parallaxEls.length && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+				let ticking = false;
+
+				const update = () => {
+					ticking = false;
+					for (const el of parallaxEls) {
+						const img = el.querySelector<HTMLElement>('[data-parallax-img]');
+						if (!img) continue;
+						const rect = el.getBoundingClientRect();
+						const viewportH = window.innerHeight;
+						// -1 (el bottom at viewport top) .. 1 (el top at viewport bottom)
+						const progress = (rect.top + rect.height / 2 - viewportH / 2) / (viewportH / 2 + rect.height / 2);
+						const shift = progress * -14; // percent
+						img.style.transform = `translate3d(0, ${shift}%, 0) scale(1.15)`;
+					}
+				};
+
+				const onScroll = () => {
+					if (!ticking) {
+						ticking = true;
+						requestAnimationFrame(update);
+					}
+				};
+
+				update();
+				window.addEventListener('scroll', onScroll, { passive: true });
+				window.addEventListener('resize', onScroll);
+			}
+		</script>
 
 		<style>
 			/* Hero: nav and photo share one grid cell so the pill nav floats over the image */
@@ -506,6 +572,7 @@ const gallery = [
 				height: 100%;
 				object-fit: cover;
 				object-position: center 20%;
+				border-radius: 0;
 				background: linear-gradient(135deg, var(--terracotta), var(--plum) 65%);
 			}
 
@@ -530,15 +597,9 @@ const gallery = [
 
 			.hero__content h1 {
 				color: var(--white);
-				font-size: clamp(2.1rem, 4.6vw, 3.75rem);
+				font-size: clamp(2.75rem, 9vw, 4.5rem);
+				line-height: 1.05;
 				text-shadow: 0 2px 20px rgba(0, 0, 0, 0.35);
-			}
-
-			.hero__lede {
-				color: rgba(255, 255, 255, 0.95);
-				max-width: 46ch;
-				margin-inline: auto;
-				text-shadow: 0 1px 12px rgba(0, 0, 0, 0.4);
 			}
 
 			.hero__actions {
@@ -547,7 +608,7 @@ const gallery = [
 				justify-content: center;
 				gap: 1.5rem;
 				flex-wrap: wrap;
-				margin-top: 1.75rem;
+				margin-top: 2.25rem;
 			}
 
 			.hero__secondary {
@@ -566,16 +627,25 @@ const gallery = [
 				}
 			}
 
+			@media (min-width: 1100px) {
+				.hero {
+					align-items: center;
+				}
+
+				.hero__content {
+					padding-block: 0;
+				}
+			}
+
 			/* Trust strip */
 			.trust-strip {
-				background: var(--white);
-				border-block: 1px solid var(--sage);
-				padding-block: 2rem;
+				background: var(--cream);
+				padding-block: 3rem;
 			}
 
 			.trust-strip__inner {
 				display: grid;
-				gap: 1.25rem 2rem;
+				gap: 2rem;
 				grid-template-columns: 1fr;
 			}
 
@@ -593,17 +663,21 @@ const gallery = [
 
 			.trust-strip__item {
 				display: flex;
-				align-items: flex-start;
+				flex-direction: column;
+				align-items: center;
+				text-align: center;
 				gap: 0.75rem;
-				font-size: 0.92rem;
+				font-family: var(--font-head);
+				font-size: 1.5rem;
 				font-weight: 500;
+				line-height: 1.25;
 				color: var(--text-dark);
 			}
 
 			.trust-strip__item svg {
 				flex-shrink: 0;
-				color: var(--terracotta-dark);
-				margin-top: 0.15rem;
+				width: 40px;
+				height: 40px;
 			}
 
 			/* Sound familiar */
@@ -622,9 +696,8 @@ const gallery = [
 				right: 0;
 				bottom: 0;
 				width: 46%;
-				border-radius: calc(var(--radius-lg) + 6px);
+				border-radius: 10px;
 				overflow: hidden;
-				border: 6px solid var(--cream);
 				box-shadow: var(--shadow-soft);
 			}
 
@@ -737,9 +810,39 @@ const gallery = [
 
 			/* Statement band */
 			.statement-band {
+				position: relative;
 				background: var(--plum);
 				color: var(--white);
 				padding: 4.5rem 0;
+			}
+
+			.statement-band__stickers {
+				position: absolute;
+				inset: 0;
+				display: none;
+				pointer-events: none;
+			}
+
+			@media (min-width: 900px) {
+				.statement-band__stickers {
+					display: block;
+				}
+			}
+
+			.statement-band__sticker {
+				position: absolute;
+				z-index: 3;
+				height: auto;
+			}
+
+			.statement-band__sticker--mobile {
+				pointer-events: none;
+			}
+
+			@media (min-width: 900px) {
+				.statement-band__sticker--mobile {
+					display: none;
+				}
 			}
 
 			@media (min-width: 768px) {
@@ -813,20 +916,28 @@ const gallery = [
 
 			.step__number {
 				position: absolute;
-				top: 1rem;
-				right: 1rem;
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				width: 3.4rem;
-				height: 3.4rem;
-				border-radius: 999px;
-				background: var(--plum);
+				top: 1.2rem;
+				right: 1.6rem;
+				width: 3.83rem;
+				height: 4.5rem;
+			}
+
+			.step__number-shape {
+				display: block;
+				width: 100%;
+				height: 100%;
+				filter: drop-shadow(var(--shadow-soft));
+			}
+
+			.step__number-value {
+				position: absolute;
+				left: 53.1%;
+				top: 60.2%;
+				transform: translate(-50%, -50%);
 				color: var(--white);
 				font-family: var(--font-head);
 				font-weight: 700;
 				font-size: 1.1rem;
-				box-shadow: var(--shadow-soft);
 			}
 
 			.step h3 {
@@ -842,84 +953,6 @@ const gallery = [
 				margin-top: 3rem;
 			}
 
-			/* Gallery strip */
-			.gallery {
-				padding: 4.5rem 0;
-				background: var(--white);
-			}
-
-			@media (min-width: 768px) {
-				.gallery {
-					padding: 7rem 0;
-				}
-			}
-
-			.gallery__head {
-				max-width: 46rem;
-				margin-bottom: 2.75rem;
-			}
-
-			.gallery__grid {
-				display: grid;
-				gap: 1.5rem;
-				grid-template-columns: repeat(2, 1fr);
-			}
-
-			@media (min-width: 900px) {
-				.gallery__grid {
-					grid-template-columns: repeat(4, 1fr);
-					align-items: center;
-				}
-
-				/* Offset alternating tiles so the row feels composed, not gridded.
-				   Uses margin, not transform, so it does not fight the reveal animation. */
-				.gallery__item:nth-child(even) {
-					margin-top: 3rem;
-				}
-			}
-
-			/* Split CTA */
-			.split-cta {
-				display: grid;
-				grid-template-columns: 1fr;
-			}
-
-			@media (min-width: 800px) {
-				.split-cta {
-					grid-template-columns: 1fr 1fr;
-				}
-			}
-
-			.split-cta__panel {
-				padding: 4.5rem 1.25rem;
-				display: flex;
-				align-items: center;
-				justify-content: center;
-			}
-
-			.split-cta__panel--families {
-				background: var(--terracotta);
-				color: var(--white);
-			}
-
-			.split-cta__panel--candidates {
-				background: var(--sage);
-				color: var(--text-dark);
-			}
-
-			.split-cta__content {
-				max-width: 26rem;
-				text-align: center;
-			}
-
-			.split-cta__panel--families h2 {
-				color: var(--white);
-			}
-
-			.split-cta__content p {
-				margin-bottom: 1.75rem;
-			}
-
 			/* Meet Austin */
 			.pull-quote {
 				font-family: var(--font-head);
@@ -932,76 +965,188 @@ const gallery = [
 				color: var(--white);
 			}
 
-			/* Community logos */
-			.logo-row {
-				display: grid;
-				gap: 1.25rem;
-				grid-template-columns: repeat(2, 1fr);
+			.section--tight-top {
+				padding-top: 0;
 			}
 
-			@media (min-width: 700px) {
-				.logo-row {
-					grid-template-columns: repeat(5, 1fr);
+			/* Services marquee */
+			.services-marquee {
+				width: 100%;
+				overflow: hidden;
+				background: var(--plum);
+				padding: 1.75rem 0;
+				-webkit-mask-image: linear-gradient(
+					to right,
+					transparent,
+					black 6%,
+					black 94%,
+					transparent
+				);
+				mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
+			}
+
+			.services-marquee__track {
+				display: flex;
+				align-items: center;
+				gap: 2.5rem;
+				width: max-content;
+				animation: services-marquee-scroll 36s linear infinite;
+			}
+
+			.services-marquee:hover .services-marquee__track {
+				animation-play-state: paused;
+			}
+
+			.services-marquee__item {
+				flex: none;
+				display: flex;
+				align-items: center;
+				gap: 2.5rem;
+			}
+
+			.services-marquee__item span {
+				font-family: var(--font-head);
+				font-weight: 700;
+				font-size: 1.5rem;
+				white-space: nowrap;
+				color: var(--white);
+			}
+
+			.services-marquee__item svg {
+				flex: none;
+			}
+
+			@keyframes services-marquee-scroll {
+				from {
+					transform: translateX(0);
+				}
+				to {
+					transform: translateX(-50%);
 				}
 			}
 
-			.logo-frame {
-				aspect-ratio: 3 / 2;
-				border: 1.5px dashed var(--sage);
-				border-radius: var(--radius-md);
+			@media (prefers-reduced-motion: reduce) {
+				.services-marquee__track {
+					animation: none;
+				}
+			}
+
+			@media (min-width: 768px) {
+				.services-marquee__item span {
+					font-size: 1.875rem;
+				}
+			}
+
+			/* Community logos marquee */
+			.marquee {
+				width: 100%;
+				overflow: hidden;
+				margin-top: 3rem;
+				-webkit-mask-image: linear-gradient(
+					to right,
+					transparent,
+					black 8%,
+					black 92%,
+					transparent
+				);
+				mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+			}
+
+			.marquee__track {
+				display: flex;
+				align-items: center;
+				gap: 3.5rem;
+				width: max-content;
+				animation: marquee-scroll 32s linear infinite;
+			}
+
+			.marquee:hover .marquee__track {
+				animation-play-state: paused;
+			}
+
+			.marquee__item {
+				flex: none;
 				display: flex;
 				align-items: center;
 				justify-content: center;
-				color: var(--text-muted);
-				font-size: 0.8rem;
+				height: 2.25rem;
 			}
 
-			/* Testimonials */
-			.testimonial-row {
-				display: flex;
-				justify-content: center;
+			.marquee__item img {
+				height: 100%;
+				width: auto;
+				max-width: 9rem;
+				object-fit: contain;
 			}
 
-			.testimonial-card {
-				max-width: 34rem;
-				text-align: center;
-				position: relative;
-				padding: 2.25rem;
+			@keyframes marquee-scroll {
+				from {
+					transform: translateX(0);
+				}
+				to {
+					transform: translateX(-50%);
+				}
 			}
 
-			.testimonial-card__tag {
-				display: inline-block;
-				background: var(--gold);
-				color: var(--text-dark);
-				font-size: 0.72rem;
-				font-weight: 700;
-				text-transform: uppercase;
-				letter-spacing: 0.06em;
-				padding: 0.3em 0.8em;
-				border-radius: 999px;
-				margin-bottom: 1.25rem;
-			}
-
-			.testimonial-card blockquote {
-				margin: 0 0 1.25rem;
-				font-size: 1.15rem;
-				line-height: 1.6;
-				color: var(--text-dark);
-			}
-
-			.testimonial-card figcaption {
-				color: var(--text-muted);
-				font-size: 0.9rem;
+			@media (prefers-reduced-motion: reduce) {
+				.marquee__track {
+					animation: none;
+				}
 			}
 
 			/* Final CTA */
-			.final-cta__inner {
-				text-align: center;
-				max-width: 46rem;
+			.final-cta {
+				display: grid;
+				grid-template-columns: 1fr;
+				width: 100%;
 			}
 
-			.final-cta__inner p {
-				margin-bottom: 2rem;
+			@media (min-width: 800px) {
+				.final-cta {
+					grid-template-columns: 2fr 3fr;
+					min-height: 20rem;
+				}
+			}
+
+			.final-cta__copy {
+				background: var(--cream);
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: flex-start;
+				padding: 2.5rem 1.75rem;
+			}
+
+			@media (min-width: 768px) {
+				.final-cta__copy {
+					padding: 2.5rem 2.5rem;
+				}
+			}
+
+			@media (min-width: 1200px) {
+				.final-cta__copy {
+					padding: 2.5rem 3vw;
+				}
+			}
+
+			.final-cta__copy .lede {
+				margin-bottom: 1.5rem;
+			}
+
+			.final-cta__media {
+				position: relative;
+				overflow: hidden;
+				min-height: 14rem;
+			}
+
+			.final-cta__media img {
+				position: absolute;
+				inset: -10% 0;
+				width: 100%;
+				height: 120%;
+				object-fit: cover;
+				will-change: transform;
+				transform: translate3d(0, 0, 0) scale(1.15);
 			}
 		</style>
 	</body>

@@ -1,0 +1,242 @@
+---
+const videos = [
+	{
+		title: 'Nannypalooza',
+		thumb: '/images/homepage/community/nannypalooza.webp',
+		alt: 'Nannies seated together at the Nannypalooza conference',
+		embed: 'https://www.youtube.com/embed/3Zd23-vyDeA?autoplay=1&rel=0',
+	},
+	{
+		title: 'International Nanny Training Day',
+		thumb: '/images/homepage/community/international-nanny-training-day.webp',
+		alt: 'Aerial view of downtown Raleigh for International Nanny Training Day',
+		embed: 'https://www.youtube.com/embed/WqN4p8GYveI?autoplay=1&rel=0',
+	},
+	{
+		title: 'Nannypalooza Photo Booth',
+		thumb: '/images/homepage/community/nannypalooza-photo-booth.webp',
+		alt: 'Nannies posing together at a photo booth with fun props',
+		embed: 'https://www.youtube.com/embed/2dq3IDHkiOM?autoplay=1&rel=0',
+	},
+	{
+		title: 'International Nanny Training Day Recap',
+		thumb: '/images/homepage/community/inntd-cover.webp',
+		alt: 'International Nanny Training Day event cover graphic',
+		embed: 'https://player.vimeo.com/video/1186070364?autoplay=1',
+	},
+];
+---
+
+<section class="section section--plum community-videos" aria-label="Community and education videos">
+	<div class="container">
+		<div class="section-head section-head--center reveal">
+			<span class="eyebrow">Community &amp; Education</span>
+			<h2>See us out in the Triangle.</h2>
+		</div>
+		<div class="video-grid reveal" style="--reveal-delay:120ms">
+			{
+				videos.map((v) => (
+					<button type="button" class="video-grid__item" data-embed={v.embed} aria-label={`Play video: ${v.title}`}>
+						<img src={v.thumb} alt={v.alt} loading="lazy" decoding="async" />
+						<span class="video-grid__play" aria-hidden="true">
+							<svg viewBox="0 0 64 64" width="48" height="48">
+								<circle cx="32" cy="32" r="32" fill="rgba(255,255,255,0.92)" />
+								<path d="M26 20l20 12-20 12V20z" fill="var(--plum)" />
+							</svg>
+						</span>
+					</button>
+				))
+			}
+		</div>
+	</div>
+</section>
+
+<div class="video-modal" id="video-modal" hidden>
+	<div class="video-modal__backdrop" data-close-modal></div>
+	<div class="video-modal__dialog" role="dialog" aria-modal="true" aria-label="Video player">
+		<button type="button" class="video-modal__close" data-close-modal aria-label="Close video">
+			<svg viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden="true">
+				<path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+			</svg>
+		</button>
+		<div class="video-modal__frame">
+			<iframe
+				id="video-modal-iframe"
+				src=""
+				title="Video player"
+				frameborder="0"
+				allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+				allowfullscreen
+			></iframe>
+		</div>
+	</div>
+</div>
+
+<style>
+	.community-videos {
+		padding-top: 0;
+	}
+
+	.video-grid {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 1.25rem;
+	}
+
+	@media (min-width: 700px) {
+		.video-grid {
+			grid-template-columns: repeat(4, 1fr);
+			gap: 1.5rem;
+		}
+	}
+
+	.video-grid__item {
+		position: relative;
+		display: block;
+		width: 100%;
+		aspect-ratio: 4 / 3;
+		padding: 0;
+		border: none;
+		border-radius: 10px;
+		overflow: hidden;
+		cursor: pointer;
+		background: var(--sage);
+	}
+
+	.video-grid__item img {
+		display: block;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		border-radius: 0;
+		transition: transform 0.3s ease;
+	}
+
+	.video-grid__item:hover img,
+	.video-grid__item:focus-visible img {
+		transform: scale(1.05);
+	}
+
+	.video-grid__item::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background: rgba(20, 12, 8, 0.15);
+		transition: background-color 0.2s ease;
+	}
+
+	.video-grid__item:hover::after,
+	.video-grid__item:focus-visible::after {
+		background: rgba(20, 12, 8, 0.3);
+	}
+
+	.video-grid__play {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		display: flex;
+		z-index: 1;
+		filter: drop-shadow(0 6px 16px rgba(20, 12, 8, 0.35));
+	}
+
+	/* Modal */
+	.video-modal {
+		position: fixed;
+		inset: 0;
+		z-index: 100;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 1.5rem;
+	}
+
+	.video-modal[hidden] {
+		display: none;
+	}
+
+	.video-modal__backdrop {
+		position: absolute;
+		inset: 0;
+		background: rgba(20, 12, 8, 0.82);
+	}
+
+	.video-modal__dialog {
+		position: relative;
+		z-index: 1;
+		width: min(960px, 100%);
+	}
+
+	.video-modal__close {
+		position: absolute;
+		top: -2.75rem;
+		right: 0;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 2.5rem;
+		height: 2.5rem;
+		border-radius: 999px;
+		border: none;
+		background: rgba(255, 255, 255, 0.12);
+		color: var(--white);
+		cursor: pointer;
+	}
+
+	.video-modal__close:hover {
+		background: rgba(255, 255, 255, 0.22);
+	}
+
+	.video-modal__frame {
+		position: relative;
+		width: 100%;
+		aspect-ratio: 16 / 9;
+		border-radius: var(--radius-md);
+		overflow: hidden;
+		background: #000;
+		box-shadow: 0 24px 64px rgba(0, 0, 0, 0.5);
+	}
+
+	.video-modal__frame iframe {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		border: none;
+	}
+</style>
+
+<script>
+	const modal = document.getElementById('video-modal');
+	const iframe = document.querySelector<HTMLIFrameElement>('#video-modal-iframe');
+	const triggers = document.querySelectorAll<HTMLButtonElement>('.video-grid__item');
+
+	const closeModal = () => {
+		if (!modal || !iframe) return;
+		modal.hidden = true;
+		iframe.src = '';
+		document.body.style.removeProperty('overflow');
+	};
+
+	const openModal = (embedSrc: string) => {
+		if (!modal || !iframe) return;
+		iframe.src = embedSrc;
+		modal.hidden = false;
+		document.body.style.overflow = 'hidden';
+	};
+
+	triggers.forEach((trigger) => {
+		trigger.addEventListener('click', () => {
+			const embed = trigger.dataset.embed;
+			if (embed) openModal(embed);
+		});
+	});
+
+	modal?.querySelectorAll('[data-close-modal]').forEach((el) => {
+		el.addEventListener('click', closeModal);
+	});
+
+	document.addEventListener('keydown', (e) => {
+		if (e.key === 'Escape' && modal && !modal.hidden) closeModal();
+	});
+</script>

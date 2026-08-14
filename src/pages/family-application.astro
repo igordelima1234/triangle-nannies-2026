@@ -1,0 +1,935 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import { SITE_TITLE } from '../consts';
+
+const title = `Start Your Search — ${SITE_TITLE}`;
+const description =
+	'Tell us about your family and what you need. It takes a few minutes, and we will follow up personally to plan your search.';
+---
+
+<html lang="en">
+	<head>
+		<BaseHead title={title} description={description} />
+	</head>
+	<body>
+		<Nav />
+
+		<main id="main">
+			<div class="tn-flow">
+				<!-- Progress Bar -->
+				<div class="progress-bar">
+					<div class="progress-fill" id="tnProgressFill"></div>
+				</div>
+
+				<!-- Top Bar -->
+				<div class="top-bar">
+					<button class="back-btn" id="tnBackBtn" onclick="tnGoBack()">← Back</button>
+					<span class="step-count" id="tnStepCount">1 / 8</span>
+				</div>
+
+				<!-- Flow -->
+				<div class="flow-container">
+					<!-- ========== STEP 1: Service Type ========== -->
+					<div class="step active" data-step="1">
+						<span class="eyebrow">Triangle Nannies & Household Staffing</span>
+						<h1 class="question">What kind of care do you need?</h1>
+						<p class="subtext">
+							Pick the option that best fits your family right now — you can refine the details
+							later.
+						</p>
+
+						<div class="answers">
+							<div
+								class="answer-card"
+								onclick="tnSelect(this, 'serviceType', 'Full-Time Nanny', true)"
+							>
+								<div class="answer-content">
+									<div class="answer-title">Full-Time Nanny</div>
+									<div class="answer-sub">30+ hours per week, ongoing</div>
+								</div>
+								<div class="answer-check"></div>
+							</div>
+							<div
+								class="answer-card"
+								onclick="tnSelect(this, 'serviceType', 'Part-Time Nanny', true)"
+							>
+								<div class="answer-content">
+									<div class="answer-title">Part-Time Nanny</div>
+									<div class="answer-sub">20–29 hours per week</div>
+								</div>
+								<div class="answer-check"></div>
+							</div>
+							<div
+								class="answer-card"
+								onclick="tnSelect(this, 'serviceType', 'Temporary or Summer Nanny', true)"
+							>
+								<div class="answer-content">
+									<div class="answer-title">Temporary or Summer</div>
+									<div class="answer-sub">Short-term or seasonal coverage</div>
+								</div>
+								<div class="answer-check"></div>
+							</div>
+							<div
+								class="answer-card"
+								onclick="tnSelect(this, 'serviceType', 'Newborn Care Specialist', true)"
+							>
+								<div class="answer-content">
+									<div class="answer-title">Newborn Care Specialist</div>
+									<div class="answer-sub">Expert support for the first months</div>
+								</div>
+								<div class="answer-check"></div>
+							</div>
+							<div
+								class="answer-card"
+								onclick="tnSelect(this, 'serviceType', 'Family Assistant or Household Manager', true)"
+							>
+								<div class="answer-content">
+									<div class="answer-title">Family Assistant / HH Manager</div>
+									<div class="answer-sub">Childcare plus household support</div>
+								</div>
+								<div class="answer-check"></div>
+							</div>
+							<div class="answer-card" onclick="tnSelect(this, 'serviceType', 'Not sure yet', true)">
+								<div class="answer-content">
+									<div class="answer-title">I'm not sure yet</div>
+									<div class="answer-sub">Help me figure it out</div>
+								</div>
+								<div class="answer-check"></div>
+							</div>
+						</div>
+
+						<div class="trust-row">
+							<span class="trust-item">15+ years in the Triangle</span>
+							<span class="trust-item">Vetted caregivers</span>
+							<span class="trust-item">Backup care included</span>
+						</div>
+					</div>
+
+					<!-- ========== STEP 2: Timeline ========== -->
+					<div class="step" data-step="2">
+						<span class="eyebrow">Step 2</span>
+						<h1 class="question">When do you need someone?</h1>
+						<p class="subtext">This helps us prioritize your placement and set realistic expectations.</p>
+
+						<div class="answers">
+							<div class="answer-card" onclick="tnSelect(this, 'timeline', 'As soon as possible', true)">
+								<div class="answer-content">
+									<div class="answer-title">As soon as possible</div>
+									<div class="answer-sub">We need help right now</div>
+								</div>
+								<div class="answer-check"></div>
+							</div>
+							<div class="answer-card" onclick="tnSelect(this, 'timeline', 'Within 4 weeks', true)">
+								<div class="answer-content">
+									<div class="answer-title">Within 4 weeks</div>
+									<div class="answer-sub">Soon but not urgent</div>
+								</div>
+								<div class="answer-check"></div>
+							</div>
+							<div class="answer-card" onclick="tnSelect(this, 'timeline', 'Within 4–8 weeks', true)">
+								<div class="answer-content">
+									<div class="answer-title">4–8 weeks out</div>
+									<div class="answer-sub">Planning ahead</div>
+								</div>
+								<div class="answer-check"></div>
+							</div>
+							<div
+								class="answer-card"
+								onclick="tnSelect(this, 'timeline', '8+ weeks — long runway', true)"
+							>
+								<div class="answer-content">
+									<div class="answer-title">8+ weeks out</div>
+									<div class="answer-sub">We have a long runway</div>
+								</div>
+								<div class="answer-check"></div>
+							</div>
+						</div>
+					</div>
+
+					<!-- ========== STEP 3: Location ========== -->
+					<div class="step" data-step="3">
+						<span class="eyebrow">Step 3</span>
+						<h1 class="question">Where are you located?</h1>
+						<p class="subtext">We serve Raleigh, Durham, Chapel Hill, and surrounding Triangle communities.</p>
+
+						<div class="answers">
+							<div class="answer-card" onclick="tnSelect(this, 'location', 'Raleigh', true)">
+								<div class="answer-content"><div class="answer-title">Raleigh</div></div>
+								<div class="answer-check"></div>
+							</div>
+							<div class="answer-card" onclick="tnSelect(this, 'location', 'Durham', true)">
+								<div class="answer-content"><div class="answer-title">Durham</div></div>
+								<div class="answer-check"></div>
+							</div>
+							<div class="answer-card" onclick="tnSelect(this, 'location', 'Chapel Hill', true)">
+								<div class="answer-content"><div class="answer-title">Chapel Hill</div></div>
+								<div class="answer-check"></div>
+							</div>
+							<div
+								class="answer-card"
+								onclick="tnSelect(this, 'location', 'Cary / Apex / Morrisville', true)"
+							>
+								<div class="answer-content">
+									<div class="answer-title">Cary / Apex / Morrisville</div>
+								</div>
+								<div class="answer-check"></div>
+							</div>
+							<div class="answer-card" onclick="tnSelect(this, 'location', 'Other Triangle area', true)">
+								<div class="answer-content">
+									<div class="answer-title">Somewhere else in the Triangle</div>
+								</div>
+								<div class="answer-check"></div>
+							</div>
+						</div>
+					</div>
+
+					<!-- ========== STEP 4: Contact Info (lead capture) ========== -->
+					<div class="step" data-step="4">
+						<span class="eyebrow">Step 4</span>
+						<h1 class="question">Let's get you the right match</h1>
+						<p class="subtext">
+							We'll send your personalized next steps to your email. No spam — just our team
+							reaching out.
+						</p>
+
+						<div class="input-row">
+							<div class="input-group">
+								<label for="firstName">First name</label>
+								<input type="text" id="firstName" placeholder="Jane" />
+								<div class="error-text" id="err-firstName">Please enter your first name</div>
+							</div>
+							<div class="input-group">
+								<label for="lastName">Last name</label>
+								<input type="text" id="lastName" placeholder="Smith" />
+								<div class="error-text" id="err-lastName">Please enter your last name</div>
+							</div>
+						</div>
+
+						<div class="input-group">
+							<label for="email">Email address</label>
+							<input type="email" id="email" placeholder="jane@email.com" />
+							<div class="error-text" id="err-email">Please enter a valid email</div>
+						</div>
+
+						<div class="input-group">
+							<label for="phone">Phone number</label>
+							<input type="tel" id="phone" placeholder="(919) 555-0100" />
+							<div class="error-text" id="err-phone">Please enter your phone number</div>
+						</div>
+
+						<div class="input-group">
+							<label for="streetAddress">Street address</label>
+							<input type="text" id="streetAddress" placeholder="123 Main Street" />
+							<div class="error-text" id="err-streetAddress">Please enter your street address</div>
+						</div>
+
+						<div class="input-row">
+							<div class="input-group">
+								<label for="city">City</label>
+								<input type="text" id="city" placeholder="Raleigh" />
+								<div class="error-text" id="err-city">Please enter your city</div>
+							</div>
+							<div class="input-group">
+								<label for="state">State</label>
+								<input type="text" id="state" placeholder="NC" />
+								<div class="error-text" id="err-state">Required</div>
+							</div>
+						</div>
+
+						<div class="input-group">
+							<label for="zip">Zip code</label>
+							<input type="text" id="zip" placeholder="27601" inputmode="numeric" />
+							<div class="error-text" id="err-zip">Please enter your zip code</div>
+						</div>
+
+						<button class="cta-btn" onclick="tnValidateContactStep()">Continue →</button>
+					</div>
+
+					<!-- ========== STEP 5: Schedule ========== -->
+					<div class="step" data-step="5">
+						<span class="eyebrow">Step 5</span>
+						<h1 class="question">What's your ideal schedule?</h1>
+						<p class="subtext">A rough sketch is fine — we'll dial in the details on our call.</p>
+
+						<div class="input-group">
+							<textarea
+								id="schedule"
+								placeholder="e.g. Monday–Friday, 7:30am–5:30pm. We have two kids (ages 3 and 6). Need help with school pickup at 3pm..."
+							></textarea>
+							<div class="error-text" id="err-schedule">Please tell us a bit about your schedule</div>
+						</div>
+
+						<button class="cta-btn" onclick="tnNextWithValidation('schedule')">Continue →</button>
+					</div>
+
+					<!-- ========== STEP 6: Family Description ========== -->
+					<div class="step" data-step="6">
+						<span class="eyebrow">Step 6</span>
+						<h1 class="question">Tell us about your family</h1>
+						<p class="subtext">
+							The more we know, the better we can match you. Kids' ages, personalities, what
+							you're looking for in a caregiver.
+						</p>
+
+						<div class="input-group">
+							<textarea
+								id="family"
+								placeholder="We're a family of four with two energetic kids who love outdoor play. Looking for someone warm, organized, and comfortable with a busy household..."
+							></textarea>
+							<div class="error-text" id="err-family">Please share a bit about your family</div>
+						</div>
+
+						<button class="cta-btn" onclick="tnNextWithValidation('family')">Continue →</button>
+					</div>
+
+					<!-- ========== STEP 7: Heard About Us ========== -->
+					<div class="step" data-step="7">
+						<span class="eyebrow">Step 7</span>
+						<h1 class="question">How did you find us?</h1>
+						<p class="subtext">This helps us understand what's working.</p>
+
+						<div class="answers">
+							<div class="answer-card" onclick="tnSelect(this, 'referral', 'Google Search', true)">
+								<div class="answer-content"><div class="answer-title">Google Search</div></div>
+								<div class="answer-check"></div>
+							</div>
+							<div
+								class="answer-card"
+								onclick="tnSelect(this, 'referral', 'Friend or Family Referral', true)"
+							>
+								<div class="answer-content"><div class="answer-title">Friend or family referral</div></div>
+								<div class="answer-check"></div>
+							</div>
+							<div class="answer-card" onclick="tnSelect(this, 'referral', 'Social Media', true)">
+								<div class="answer-content"><div class="answer-title">Social media</div></div>
+								<div class="answer-check"></div>
+							</div>
+							<div class="answer-card" onclick="tnSelect(this, 'referral', 'Pediatrician or OB', true)">
+								<div class="answer-content"><div class="answer-title">Pediatrician or OB referral</div></div>
+								<div class="answer-check"></div>
+							</div>
+							<div
+								class="answer-card"
+								onclick="tnSelect(this, 'referral', 'Mom group / Junior League', true)"
+							>
+								<div class="answer-content"><div class="answer-title">Mom group or Junior League</div></div>
+								<div class="answer-check"></div>
+							</div>
+							<div class="answer-card" onclick="tnSelect(this, 'referral', 'Other', true)">
+								<div class="answer-content"><div class="answer-title">Other</div></div>
+								<div class="answer-check"></div>
+							</div>
+						</div>
+					</div>
+
+					<!-- ========== STEP 8: Urgent Flag + Submit ========== -->
+					<div class="step" data-step="8">
+						<span class="eyebrow">Last step</span>
+						<h1 class="question">Anything urgent we should know?</h1>
+						<p class="subtext">Choose what fits. We'll be in touch shortly either way.</p>
+
+						<div class="answers">
+							<div
+								class="answer-card"
+								onclick="tnSelect(this, 'urgency', 'Yes — please reach out within 24 hours', false)"
+							>
+								<div class="answer-content">
+									<div class="answer-title">Yes, I need immediate help</div>
+									<div class="answer-sub">Reach out within 24 hours</div>
+								</div>
+								<div class="answer-check"></div>
+							</div>
+							<div
+								class="answer-card"
+								onclick="tnSelect(this, 'urgency', 'No rush — standard timeline is fine', false)"
+							>
+								<div class="answer-content">
+									<div class="answer-title">No rush</div>
+									<div class="answer-sub">Standard timeline is fine</div>
+								</div>
+								<div class="answer-check"></div>
+							</div>
+						</div>
+
+						<button class="cta-btn" onclick="tnSubmit()" id="tnSubmitBtn">Submit Application ✦</button>
+					</div>
+
+					<!-- ========== SUCCESS ========== -->
+					<div class="step" data-step="success">
+						<div class="success">
+							<div class="success-icon">✦</div>
+							<h2>You're all set</h2>
+							<p>
+								Thank you for reaching out. We've received your application and we'll be in touch
+								shortly to schedule your discovery call.
+							</p>
+
+							<div class="next-steps-box">
+								<h4>What happens next</h4>
+								<ol>
+									<li>
+										<strong>Check your inbox</strong>A confirmation email is on its way (peek in
+										spam if you don't see it)
+									</li>
+									<li>
+										<strong>Schedule your call</strong>We'll send a Calendly link to book your
+										discovery call
+									</li>
+									<li><strong>Meet your match</strong>We'll get to work finding your perfect caregiver</li>
+								</ol>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</main>
+
+		<Footer />
+
+		<style>
+			.tn-flow * {
+				box-sizing: border-box;
+			}
+
+			.tn-flow {
+				background: var(--cream);
+				font-family: var(--font-body);
+				color: var(--text-dark);
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				padding: 0 0 40px;
+			}
+
+			/* Progress Bar */
+			.tn-flow .progress-bar {
+				width: 100%;
+				height: 4px;
+				background: #f0ddb4;
+				position: sticky;
+				top: 0;
+				z-index: 100;
+			}
+
+			.tn-flow .progress-fill {
+				height: 100%;
+				background: var(--gold);
+				width: 0%;
+				transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+			}
+
+			/* Top bar with back button */
+			.tn-flow .top-bar {
+				width: 100%;
+				max-width: 560px;
+				padding: 20px 24px;
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				min-height: 60px;
+			}
+
+			.tn-flow .back-btn {
+				background: none;
+				border: none;
+				font-family: var(--font-body);
+				font-size: 14px;
+				font-weight: 500;
+				color: var(--text-muted);
+				cursor: pointer;
+				padding: 8px 4px;
+				display: flex;
+				align-items: center;
+				gap: 6px;
+				transition: color 0.2s ease;
+				visibility: hidden;
+			}
+
+			.tn-flow .back-btn.visible {
+				visibility: visible;
+			}
+
+			.tn-flow .back-btn:hover {
+				color: var(--text-dark);
+			}
+
+			.tn-flow .step-count {
+				font-size: 12px;
+				font-weight: 500;
+				color: var(--text-muted);
+				letter-spacing: 0.05em;
+			}
+
+			/* Main content container */
+			.tn-flow .flow-container {
+				width: 100%;
+				max-width: 560px;
+				padding: 20px 24px;
+				flex: 1;
+			}
+
+			.tn-flow .step {
+				display: none;
+				animation: tnStepIn 0.4s cubic-bezier(0.4, 0, 0.2, 1) both;
+			}
+
+			.tn-flow .step.active {
+				display: block;
+			}
+
+			@keyframes tnStepIn {
+				from {
+					opacity: 0;
+					transform: translateX(20px);
+				}
+				to {
+					opacity: 1;
+					transform: translateX(0);
+				}
+			}
+
+			/* Eyebrow & Question */
+			.tn-flow .eyebrow {
+				font-family: var(--font-head);
+				font-size: 11px;
+				font-weight: 700;
+				letter-spacing: 0.16em;
+				text-transform: uppercase;
+				color: var(--terracotta-dark);
+				margin-bottom: 14px;
+				display: block;
+			}
+
+			.tn-flow .question {
+				font-family: var(--font-head);
+				font-size: clamp(26px, 5vw, 34px);
+				font-weight: 600;
+				color: var(--text-dark);
+				line-height: 1.2;
+				letter-spacing: 0;
+				margin-bottom: 12px;
+			}
+
+			.tn-flow .subtext {
+				font-size: 15px;
+				color: var(--text-muted);
+				line-height: 1.6;
+				font-weight: 400;
+				margin-bottom: 36px;
+			}
+
+			/* Answer cards */
+			.tn-flow .answers {
+				display: flex;
+				flex-direction: column;
+				gap: 12px;
+				margin-bottom: 32px;
+			}
+
+			.tn-flow .answer-card {
+				background: var(--white);
+				border: 2px solid #e7d9c2;
+				border-radius: 14px;
+				padding: 20px 22px;
+				cursor: pointer;
+				transition: all 0.2s ease;
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				gap: 16px;
+				min-height: 64px;
+				user-select: none;
+				-webkit-tap-highlight-color: transparent;
+			}
+
+			.tn-flow .answer-card:hover {
+				border-color: var(--gold);
+				transform: translateY(-1px);
+				box-shadow: 0 4px 16px rgba(255, 181, 105, 0.25);
+			}
+
+			.tn-flow .answer-card:active {
+				transform: scale(0.98);
+			}
+
+			.tn-flow .answer-card.selected {
+				border-color: var(--gold);
+				background: #fff3e0;
+				box-shadow: 0 4px 20px rgba(255, 181, 105, 0.3);
+			}
+
+			.tn-flow .answer-content {
+				flex: 1;
+			}
+
+			.tn-flow .answer-title {
+				font-size: 16px;
+				font-weight: 600;
+				color: var(--text-dark);
+				line-height: 1.3;
+				margin-bottom: 2px;
+			}
+
+			.tn-flow .answer-sub {
+				font-size: 13px;
+				color: var(--text-muted);
+				font-weight: 400;
+				line-height: 1.4;
+			}
+
+			.tn-flow .answer-check {
+				width: 22px;
+				height: 22px;
+				border-radius: 50%;
+				border: 2px solid #e7d9c2;
+				flex-shrink: 0;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				transition: all 0.2s ease;
+			}
+
+			.tn-flow .answer-card.selected .answer-check {
+				background: var(--gold);
+				border-color: var(--gold);
+			}
+
+			.tn-flow .answer-card.selected .answer-check::after {
+				content: '✓';
+				color: var(--text-dark);
+				font-size: 13px;
+				font-weight: 700;
+			}
+
+			/* Inputs (for contact step) */
+			.tn-flow .input-group {
+				margin-bottom: 18px;
+			}
+
+			.tn-flow .input-group label {
+				display: block;
+				font-size: 13px;
+				font-weight: 600;
+				color: var(--text-dark);
+				margin-bottom: 8px;
+				letter-spacing: 0.02em;
+			}
+
+			.tn-flow input[type='text'],
+			.tn-flow input[type='email'],
+			.tn-flow input[type='tel'],
+			.tn-flow textarea {
+				width: 100%;
+				padding: 16px 18px;
+				border: 2px solid #e7d9c2;
+				border-radius: 12px;
+				background: var(--white);
+				font-family: var(--font-body);
+				font-size: 16px;
+				color: var(--text-dark);
+				outline: none;
+				transition: all 0.2s ease;
+			}
+
+			.tn-flow input:focus,
+			.tn-flow textarea:focus {
+				border-color: var(--gold);
+				box-shadow: 0 0 0 4px rgba(255, 181, 105, 0.2);
+			}
+
+			.tn-flow input.error,
+			.tn-flow textarea.error {
+				border-color: #c0392b;
+			}
+
+			.tn-flow textarea {
+				resize: vertical;
+				min-height: 130px;
+				line-height: 1.5;
+				font-family: var(--font-body);
+			}
+
+			.tn-flow .error-text {
+				font-size: 12px;
+				color: #c0392b;
+				margin-top: 6px;
+				display: none;
+			}
+
+			.tn-flow .error-text.show {
+				display: block;
+			}
+
+			.tn-flow .input-row {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 12px;
+			}
+
+			@media (max-width: 420px) {
+				.tn-flow .input-row {
+					grid-template-columns: 1fr;
+				}
+			}
+
+			/* CTA button */
+			.tn-flow .cta-btn {
+				width: 100%;
+				background: var(--plum);
+				color: var(--white);
+				border: none;
+				border-radius: 999px;
+				padding: 18px 24px;
+				font-family: var(--font-body);
+				font-size: 16px;
+				font-weight: 600;
+				cursor: pointer;
+				transition: all 0.2s ease;
+				margin-top: 8px;
+				letter-spacing: 0.02em;
+			}
+
+			.tn-flow .cta-btn:hover {
+				background: #7a6480;
+				transform: translateY(-2px);
+				box-shadow: var(--shadow-soft);
+			}
+
+			.tn-flow .cta-btn:active {
+				transform: scale(0.98);
+			}
+
+			.tn-flow .cta-btn:disabled {
+				background: #e7d9c2;
+				cursor: not-allowed;
+				transform: none;
+				box-shadow: none;
+			}
+
+			/* Trust footer on first step */
+			.tn-flow .trust-row {
+				display: flex;
+				justify-content: center;
+				gap: 24px;
+				margin-top: 28px;
+				flex-wrap: wrap;
+			}
+
+			.tn-flow .trust-item {
+				display: flex;
+				align-items: center;
+				gap: 6px;
+				font-size: 12px;
+				color: var(--text-muted);
+				font-weight: 500;
+			}
+
+			.tn-flow .trust-item::before {
+				content: '✓';
+				color: var(--terracotta-dark);
+				font-weight: 700;
+			}
+
+			/* Success */
+			.tn-flow .success {
+				text-align: center;
+				padding: 40px 0;
+			}
+
+			.tn-flow .success-icon {
+				width: 80px;
+				height: 80px;
+				background: #fff3e0;
+				border-radius: 50%;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				margin: 0 auto 24px;
+				font-size: 36px;
+				color: var(--terracotta-dark);
+				animation: tnPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+			}
+
+			@keyframes tnPop {
+				from {
+					transform: scale(0);
+				}
+				to {
+					transform: scale(1);
+				}
+			}
+
+			.tn-flow .success h2 {
+				font-family: var(--font-head);
+				font-size: 32px;
+				font-weight: 600;
+				color: var(--text-dark);
+				margin-bottom: 12px;
+			}
+
+			.tn-flow .success p {
+				font-size: 15px;
+				color: var(--text-muted);
+				line-height: 1.6;
+				max-width: 380px;
+				margin: 0 auto 32px;
+			}
+
+			.tn-flow .next-steps-box {
+				background: var(--white);
+				border: 1px solid #e7d9c2;
+				border-radius: 16px;
+				padding: 24px 28px;
+				text-align: left;
+				max-width: 420px;
+				margin: 0 auto;
+			}
+
+			.tn-flow .next-steps-box h4 {
+				font-family: var(--font-head);
+				font-size: 11px;
+				font-weight: 700;
+				letter-spacing: 0.15em;
+				text-transform: uppercase;
+				color: var(--terracotta-dark);
+				margin-bottom: 14px;
+			}
+
+			.tn-flow .next-steps-box ol {
+				padding-left: 18px;
+				display: flex;
+				flex-direction: column;
+				gap: 10px;
+			}
+
+			.tn-flow .next-steps-box li {
+				font-size: 14px;
+				color: var(--text-dark);
+				line-height: 1.5;
+			}
+
+			.tn-flow .next-steps-box li strong {
+				color: var(--text-dark);
+				font-weight: 600;
+				display: block;
+			}
+		</style>
+
+		<script is:inline>
+			(function () {
+				let tnCurrentStep = 1;
+				const tnTotalSteps = 8;
+				const tnFormData = {};
+
+				window.tnSelect = function (card, field, value, autoAdvance) {
+					const parent = card.parentElement;
+					parent.querySelectorAll('.answer-card').forEach((c) => c.classList.remove('selected'));
+					card.classList.add('selected');
+					tnFormData[field] = value;
+
+					if (autoAdvance) {
+						setTimeout(() => tnGoNext(), 280);
+					}
+				};
+
+				window.tnGoNext = function () {
+					if (tnCurrentStep >= tnTotalSteps) {
+						tnSubmit();
+						return;
+					}
+					tnCurrentStep++;
+					tnRenderStep();
+				};
+
+				window.tnGoBack = function () {
+					if (tnCurrentStep <= 1) return;
+					tnCurrentStep--;
+					tnRenderStep();
+				};
+
+				window.tnValidateContactStep = function () {
+					let valid = true;
+					const fields = ['firstName', 'lastName', 'email', 'phone', 'streetAddress', 'city', 'state', 'zip'];
+					fields.forEach((f) => {
+						const el = document.getElementById(f);
+						const err = document.getElementById('err-' + f);
+						let empty = !el.value.trim();
+						if (f === 'email' && el.value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(el.value)) empty = true;
+						el.classList.toggle('error', empty);
+						err.classList.toggle('show', empty);
+						if (empty) valid = false;
+					});
+					if (valid) {
+						fields.forEach((f) => (tnFormData[f] = document.getElementById(f).value.trim()));
+						tnGoNext();
+					}
+				};
+
+				window.tnNextWithValidation = function (field) {
+					const el = document.getElementById(field);
+					const err = document.getElementById('err-' + field);
+					const empty = !el.value.trim();
+					el.classList.toggle('error', empty);
+					err.classList.toggle('show', empty);
+					if (!empty) {
+						tnFormData[field] = el.value.trim();
+						tnGoNext();
+					}
+				};
+
+				function tnRenderStep() {
+					document.querySelectorAll('.tn-flow .step').forEach((s) => s.classList.remove('active'));
+					const next = document.querySelector(`.tn-flow .step[data-step="${tnCurrentStep}"]`);
+					if (next) next.classList.add('active');
+
+					const pct = ((tnCurrentStep - 1) / tnTotalSteps) * 100;
+					document.getElementById('tnProgressFill').style.width = pct + '%';
+
+					document.getElementById('tnStepCount').textContent = tnCurrentStep + ' / ' + tnTotalSteps;
+
+					const back = document.getElementById('tnBackBtn');
+					if (tnCurrentStep > 1) back.classList.add('visible');
+					else back.classList.remove('visible');
+
+					window.scrollTo({ top: 0, behavior: 'smooth' });
+				}
+
+				window.tnSubmit = async function () {
+					const btn = document.getElementById('tnSubmitBtn');
+					if (btn) {
+						btn.textContent = 'Submitting...';
+						btn.disabled = true;
+					}
+
+					// ============================================================
+					// GHL WEBHOOK
+					// ============================================================
+					const GHL_WEBHOOK_URL =
+						'https://services.leadconnectorhq.com/hooks/lfmiJhBmk6OoqjZjLwOA/webhook-trigger/974fc220-dc98-45e1-85b9-4479a4e2863c';
+
+					try {
+						await fetch(GHL_WEBHOOK_URL, {
+							method: 'POST',
+							headers: { 'Content-Type': 'application/json' },
+							body: JSON.stringify(tnFormData),
+							mode: 'no-cors',
+						});
+					} catch (err) {
+						console.warn('Webhook delivery note:', err);
+					}
+
+					document.querySelectorAll('.tn-flow .step').forEach((s) => s.classList.remove('active'));
+					document.querySelector('.tn-flow .step[data-step="success"]').classList.add('active');
+					document.getElementById('tnProgressFill').style.width = '100%';
+					document.getElementById('tnStepCount').textContent = 'Complete';
+					document.getElementById('tnBackBtn').classList.remove('visible');
+					window.scrollTo({ top: 0, behavior: 'smooth' });
+				};
+
+				tnRenderStep();
+			})();
+		</script>
+	</body>
+</html>
